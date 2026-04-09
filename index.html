@@ -228,20 +228,16 @@
 
     // 2. Función Maestra de Ejecución
     async function lanzar() {
-        const bot = document.getElementById('tipo-bot').value;
-        const par = document.getElementById('par-bot').value;
-        const btn = document.querySelector('.btn-action');
-        
-        // Cambio visual del botón
-        btn.innerText = "SINCRONIZANDO...";
-        btn.style.opacity = "0.6";
+            const respuesta = await fetch('https://triangulamax-bot.onrender.com/ejecutar-arbitraje', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            estrategia: botSeleccionado,
+            par: parSeleccionado,
+            usuario: "José Gregorio"
+        })
+    });
 
-        // Simulación de envío de datos al servidor de Python
-        setTimeout(() => {
-            alert("SISTEMA ACTIVO\n-------------------\nESTRATEGIA: " + bot.toUpperCase() + "\nPAR SELECCIONADO: " + par + "\nESTADO: Operando en tiempo real");
-            btn.innerText = "EJECUTAR ARBITRAJE";
-            btn.style.opacity = "1";
-        }, 1200);
     }
 </script>
 
