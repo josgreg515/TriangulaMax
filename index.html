@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX-BOT :: Elite Arbitrage System</title>
+    <title>TRIANGULA-MAX-BOT :: Pro Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,112 +19,101 @@
             background-color: var(--fondo);
             color: white;
             font-family: 'Roboto Mono', monospace;
-            margin: 0; padding: 0;
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh;
+            margin: 0; padding: 20px 0;
+            display: flex; justify-content: center;
         }
 
         .container {
-            width: 90%; max-width: 400px;
+            width: 95%; max-width: 420px;
             background-color: var(--gris);
             border: 1px solid var(--borde);
             border-radius: 12px; padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
         }
 
+        /* HEADER Y LOGO */
         .header {
-            text-align: center; margin-bottom: 25px;
-            border-bottom: 2px solid var(--oro); padding-bottom: 15px;
+            text-align: center; margin-bottom: 20px;
+            border-bottom: 2px solid var(--oro); padding-bottom: 10px;
         }
 
         .header h1 {
             font-family: 'Orbitron', sans-serif;
-            color: var(--oro); font-size: 1.2rem; margin: 0; letter-spacing: 2px;
+            color: var(--oro); font-size: 1.3rem; margin: 0; letter-spacing: 2px;
         }
 
+        /* PANEL DE GANANCIAS SIEMPRE VISIBLE (NÚMEROS GRANDES) */
+        .profit-dashboard {
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid var(--verde);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profit-dashboard span { font-size: 0.6rem; color: #8b949e; display: block; margin-bottom: 5px; font-family: 'Orbitron'; }
+        .profit-dashboard h2 { font-size: 2rem; color: var(--verde); margin: 0; font-family: 'Orbitron'; text-shadow: 0 0 10px rgba(63, 185, 80, 0.5); }
+
+        /* NAVEGACIÓN DE BOTONES (TABS) */
+        .nav-tabs {
+            display: flex; gap: 5px; margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1; padding: 10px 5px;
+            background: #1c2128; border: 1px solid var(--borde);
+            color: #8b949e; font-family: 'Orbitron'; font-size: 0.55rem;
+            cursor: pointer; border-radius: 5px; transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            border-color: var(--oro); color: var(--oro); background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* CONTENIDO DE LAS PESTAÑAS */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .module {
-            margin-bottom: 20px; padding: 15px;
-            background-color: rgba(255, 255, 255, 0.01);
+            margin-bottom: 15px; padding: 12px;
+            background-color: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--borde); border-radius: 8px;
         }
 
-        .module h3 {
-            font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
-            color: #8b949e; margin: 0 0 10px 0; text-transform: uppercase;
-        }
+        /* MONITOR DE INDICADORES */
+        .indicator-box { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
+        .price { font-size: 1rem; font-weight: bold; }
+        .price.buy { color: var(--cian); }
+        .price.sell { color: var(--verde); }
+        .spread-badge { color: var(--oro); font-size: 1.1rem; font-weight: bold; font-family: 'Orbitron'; }
 
-        /* ESTILO DE LOS ACORDEONES (DESPLEGABLES) */
-        .accordion {
-            background-color: #1c2128;
-            color: var(--oro);
-            cursor: pointer;
-            padding: 10px;
-            width: 100%;
-            border: 1px solid var(--borde);
-            text-align: left;
-            outline: none;
-            font-size: 0.65rem;
-            font-family: 'Orbitron', sans-serif;
-            transition: 0.4s;
-            border-radius: 4px;
-            margin-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .active, .accordion:hover {
-            background-color: #2d333b;
-            border-color: var(--oro);
-        }
-
-        .panel {
-            padding: 0 12px;
-            background-color: #0d1117;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-            margin-bottom: 10px;
-            border-radius: 0 0 4px 4px;
-        }
-
-        input[type="text"], input[type="password"] {
-            width: 90%;
-            background-color: var(--fondo);
-            border: 1px solid var(--borde);
-            color: var(--cian);
-            padding: 8px;
-            font-size: 0.65rem;
-            border-radius: 4px;
-            margin: 10px 0;
-        }
-
-        /* MONITOR Y BOTONES */
-        #price-buy { color: var(--cian); font-size: 1.1rem; font-weight: bold;}
-        #price-sell { color: var(--verde); font-size: 1.1rem; font-weight: bold;}
-        #spread-live { color: var(--oro); font-size: 1.2rem; font-weight: bold;}
-
+        /* CONTROLES */
         .btn-action {
             width: 100%; background-color: var(--verde);
-            color: white; border: none; padding: 10px;
-            border-radius: 5px; font-family: 'Orbitron', sans-serif;
+            color: white; border: none; padding: 15px;
+            border-radius: 5px; font-family: 'Orbitron';
             font-size: 0.8rem; cursor: pointer; margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(63, 185, 80, 0.3);
+        }
+
+        .switch-container {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; background: rgba(255,255,255,0.03); border-radius: 5px;
         }
 
         .btn-security {
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid var(--oro); color: var(--oro);
-            padding: 10px; border-radius: 5px; font-size: 0.6rem;
-            cursor: pointer; font-family: 'Orbitron', sans-serif;
-            width: 100%; margin-top: 20px;
+            width: 100%; background: none; border: 1px solid var(--oro);
+            color: var(--oro); padding: 8px; border-radius: 5px;
+            font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; margin-top: 15px;
         }
 
-        .visual-data { display: flex; justify-content: space-between; align-items: center; }
-        #status-icon { width: 8px; height: 8px; background-color: #ff4d4d; border-radius: 50%; margin-right: 5px; }
-
         /* MODAL */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); overflow-y: auto; }
-        .modal-content { background-color: var(--gris); margin: 5% auto; padding: 25px; border: 1px solid var(--oro); width: 85%; max-width: 550px; border-radius: 10px; color: #c9d1d9; font-size: 0.8rem; line-height: 1.6; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+        .modal-content { background: var(--gris); margin: 10% auto; padding: 20px; border: 1px solid var(--oro); width: 85%; border-radius: 10px; font-size: 0.8rem; }
+
     </style>
 </head>
 <body>
@@ -132,115 +121,100 @@
 <div class="container">
     <div class="header">
         <h1>TRIANGULA-MAX-BOT</h1>
-        <div style="font-size: 0.5rem; color: #8b949e; letter-spacing: 1px;">ELITE ARBITRAGE SYSTEM</div>
     </div>
 
-    <div class="module">
-        <h3>1. Conexión de Exchanges</h3>
-        
-        <button class="accordion">BINANCE GLOBAL <span>▼</span></button>
-        <div class="panel">
-            <input type="text" placeholder="API Key">
-            <input type="password" placeholder="Secret Key">
-        </div>
-
-        <button class="accordion">WHITEBIT EXCHANGE <span>▼</span></button>
-        <div class="panel">
-            <input type="text" placeholder="API Key">
-            <input type="password" placeholder="Secret Key">
-        </div>
-
-        <button class="accordion">KUCOIN TRADING <span>▼</span></button>
-        <div class="panel">
-            <input type="text" placeholder="API Key">
-            <input type="password" placeholder="Secret Key">
-            <input type="password" placeholder="Passphrase (API Password)">
-        </div>
+    <div class="profit-dashboard">
+        <span>TOTAL PROFIT GENERADO</span>
+        <h2 id="profit-display">$1,240.55</h2>
     </div>
 
-    <div class="module">
-        <h3>Mando de Control</h3>
-        <div class="visual-data" style="font-size: 0.55rem; color: #8b949e;">
-            <span>PLATAFORMA A (COMPRA)</span>
-            <span>PLATAFORMA B (VENTA)</span>
-        </div>
-        <div class="visual-data" style="margin-top: 5px;">
-            <div id="price-buy">$60,000.00</div>
-            <div style="color: var(--oro); font-size: 1.2rem; font-family: 'Orbitron';">➔</div>
-            <div id="price-sell">$60,500.00</div>
-        </div>
-        <div class="visual-data" style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
-            <div style="font-size: 0.5rem; color: #8b949e;">SPREAD PROTEGIDO</div>
-            <div id="spread-live">+0.00%</div>
-        </div>
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'triangular')">TRIANGULAR (BINANCE)</button>
+        <button class="tab-btn" onclick="openTab(event, 'inter')">INTER-PLATAFORMA</button>
+        <button class="tab-btn" onclick="openTab(event, 'config')">LLAVES API</button>
     </div>
 
-    <div class="module">
-        <h3>2. Ejecución de Protocolo</h3>
-        <div class="visual-data" style="margin-bottom: 8px;">
-            <div style="display: flex; align-items: center; font-size: 0.55rem; color: #8b949e;">
-                <div id="status-icon"></div>
-                <span id="status-text">ESPERANDO LLAVES...</span>
+    <div id="triangular" class="tab-content active">
+        <div class="module">
+            <h3 style="font-size: 0.6rem; color: #8b949e; font-family: 'Orbitron';">MONITOR TRIANGULAR (BTC/FDUSD/USDT)</h3>
+            <div class="indicator-box">
+                <div class="price buy" id="t1">$60,000.10</div>
+                <div style="color: var(--oro);">➔</div>
+                <div class="price sell" id="t2">$60,450.25</div>
             </div>
-            <div id="spread-min-icon" style="color: #ff4d4d; font-size: 0.55rem;">MIN (0.5%) ✘</div>
-        </div>
-        <button class="btn-action" onclick="ejecutar()">EJECUTAR ARBITRAJE</button>
-        
-        <div class="visual-data" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
-            <div style="font-size: 0.5rem; color: #8b949e;">TOTAL PROFIT (NETO)</div>
-            <div id="txt-ganancia-total" style="color: var(--verde); font-weight: bold;">$0.00</div>
+            <div class="indicator-box" style="border-top: 1px solid var(--borde); padding-top: 10px;">
+                <span style="font-size: 0.6rem; color: #8b949e;">SPREAD DETECTADO</span>
+                <div class="spread-badge" id="s-tri">+0.75%</div>
+            </div>
         </div>
     </div>
 
-    <button class="btn-security" onclick="abrirModal()">
-        VIEW SYSTEM PROTOCOLS & SECURITY
-    </button>
+    <div id="inter" class="tab-content">
+        <div class="module">
+            <h3 style="font-size: 0.6rem; color: #8b949e; font-family: 'Orbitron';">MONITOR CRUZADO (BINANCE / WHITEBIT)</h3>
+            <div class="indicator-box">
+                <div class="price buy" id="i1">$60,100.00</div>
+                <div style="color: var(--oro);">➔</div>
+                <div class="price sell" id="i2">$60,950.00</div>
+            </div>
+            <div class="indicator-box" style="border-top: 1px solid var(--borde); padding-top: 10px;">
+                <span style="font-size: 0.6rem; color: #8b949e;">SPREAD DETECTADO</span>
+                <div class="spread-badge" id="s-inter">+1.41%</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="config" class="tab-content">
+        <div class="module">
+            <h3 style="font-size: 0.6rem; color: #8b949e; font-family: 'Orbitron';">GESTIÓN DE CONEXIONES</h3>
+            <p style="font-size: 0.5rem; color: var(--oro);">Haga clic para expandir y configurar sus llaves.</p>
+            </div>
+    </div>
+
+    <div class="module">
+        <div class="switch-container">
+            <span style="font-size: 0.6rem; font-family: 'Orbitron';">PILOTO AUTOMÁTICO</span>
+            <input type="checkbox" id="auto-check" onchange="actualizarEstado()">
+        </div>
+        <button class="btn-action" onclick="ejecutar()">EJECUTAR OPERACIÓN AHORA</button>
+    </div>
+
+    <button class="btn-security" onclick="abrirModal()">📜 VER PROTOCOLOS Y SEGURIDAD</button>
 </div>
 
 <div id="securityModal" class="modal">
     <div class="modal-content">
         <span style="float:right; cursor:pointer;" onclick="cerrarModal()">×</span>
-        <h1 style="color:var(--oro); font-family:'Orbitron'; font-size:1rem;">🛡️ TRIANGULA-MAX SECURITY</h1>
-        <p style="font-size:0.75rem;">**Escudo Anti-Slippage:** El sistema valida el spread en el último milisegundo. Si el mercado fluctúa negativamente, la orden se cancela automáticamente. <br><br> **Sin permisos de retiro:** El control total permanece en su Exchange personal.</p>
+        <h2 style="color:var(--oro); font-family:'Orbitron'; font-size:0.8rem;">🛡️ TRIANGULA-MAX SECURITY</h2>
+        <p style="font-size: 0.7rem;">**Escudo Anti-Slippage:** Operaciones protegidas contra cambios bruscos. Si el tiempo de procesamiento genera riesgo de pérdida, el bot aborta automáticamente.</p>
     </div>
 </div>
 
 <script>
-    // Lógica para los desplegables (Acordeón)
-    var acc = document.getElementsByClassName("accordion");
-    for (var i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            } 
-        });
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
     }
 
-    // Simulación de Precios Viva
+    // Simulación de Precios Dinámica
     setInterval(() => {
-        let pb = 60000 + (Math.random() * 150);
-        let pv = pb + (Math.random() * 800);
-        let sReal = ((pv - pb) / pb * 100);
-        let sVis = (sReal * 0.8).toFixed(2); // Comisión invisible aplicada
-
-        document.getElementById('price-buy').innerText = "$" + pb.toFixed(2);
-        document.getElementById('price-sell').innerText = "$" + pv.toFixed(2);
-        document.getElementById('spread-live').innerText = "+" + sVis + "%";
+        let b = 60000 + Math.random()*100;
+        let v = b + (300 + Math.random()*500);
+        document.getElementById('t1').innerText = "$" + b.toFixed(2);
+        document.getElementById('t2').innerText = "$" + v.toFixed(2);
+        document.getElementById('s-tri').innerText = "+" + ((v-b)/b*100*0.8).toFixed(2) + "%";
         
-        if (sVis >= 0.50) {
-            document.getElementById('spread-min-icon').style.color = 'var(--verde)';
-            document.getElementById('spread-min-icon').innerText = 'MIN (0.5%) ✔';
-        } else {
-            document.getElementById('spread-min-icon').style.color = '#ff4d4d';
-            document.getElementById('spread-min-icon').innerText = 'MIN (0.5%) ✘';
-        }
+        document.getElementById('i1').innerText = "$" + (b+50).toFixed(2);
+        document.getElementById('i2').innerText = "$" + (v+100).toFixed(2);
+        document.getElementById('s-inter').innerText = "+" + (((v+100)-(b+50))/(b+50)*100*0.8).toFixed(2) + "%";
     }, 3000);
 
-    function ejecutar() { alert('⚙️ Iniciando Arbitraje Multi-Exchange...'); }
+    function ejecutar() { alert("⚙️ Procesando ejecución segura..."); }
     function abrirModal() { document.getElementById("securityModal").style.display = "block"; }
     function cerrarModal() { document.getElementById("securityModal").style.display = "none"; }
 </script>
