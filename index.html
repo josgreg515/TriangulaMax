@@ -207,12 +207,6 @@
 </div>
 
 <script>
-    function lanzar() {
-        const bot = document.getElementById('tipo-bot').value;
-        const par = document.getElementById('par-bot').value;
-        alert("ORDEN ENVIADA: " + bot.toUpperCase() + " operando en " + par);
-    }
-
     setInterval(() => {
         const val = (1.10 + Math.random() * 0.5).toFixed(2);
         document.getElementById('spread-live').innerText = "+" + val + "%";
