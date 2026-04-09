@@ -3,38 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | Panel de Control Premium</title>
-    <link rel="stylesheet" href="style.css">
+    <title>TRIANGULA-MAX | Panel Oficial</title>
+    <style>
+        :root {
+            --oro: #d4af37;
+            --cian: #00e5ff;
+            --fondo: #05070a;
+            --panel: rgba(20, 27, 38, 0.8);
+            --borde: rgba(212, 175, 55, 0.3);
+        }
+
+        body {
+            background-color: var(--fondo);
+            background-image: radial-gradient(circle at center, #101a26 0%, #05070a 100%);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .main-frame {
+            width: 95%;
+            max-width: 1200px;
+            background: var(--panel);
+            border: 2px solid var(--borde);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 229, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Cabecera con el LOGO REAL integrado */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .real-logo {
+            height: 45px;
+            width: auto;
+            filter: drop-shadow(0 0 10px var(--cian));
+        }
+
+        .logo-area h1 {
+            font-size: 1.6rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--cian));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        /* Grid de Módulos (Reales y Funcionales) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .module {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--cian), transparent);
+        }
+
+        .module h3 {
+            color: var(--oro);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-top: 0;
+            border-left: 3px solid var(--cian);
+            padding-left: 10px;
+        }
+
+        /* Elementos Visuales */
+        .visual-data {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 15px 0;
+        }
+
+        .circle-chart {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--cian);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--cian);
+        }
+
+        /* Botón de Acción */
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, #1a1a1a, #333);
+            border: 1px solid var(--oro);
+            color: var(--oro);
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            background: var(--oro);
+            color: black;
+            box-shadow: 0 0 20px var(--oro);
+        }
+
+        .price-text {
+            font-size: 2rem;
+            color: var(--cian);
+            text-shadow: 0 0 10px var(--cian);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="dashboard-wrapper">
-        <img src="dashboard-bg.png" alt="Dashboard Triangula-Max Background" class="dashboard-bg">
 
-        <div class="active-layer">
-            <a href="/logout" class="active-logout">LOGOUT</a>
+<div class="main-frame">
+    <div class="top-bar">
+        <div class="logo-area">
+            <img src="logo.png" alt="Emblema Triangula-Max" class="real-logo">
+            <h1>TRIANGULA-MAX <span style="font-size: 0.8rem; color: var(--oro);">BOT</span></h1>
+        </div>
+        <div style="font-size: 0.7rem; text-align: right;">
+            SISTEMA: <span style="color: #3fb950;">EN VIVO</span><br>
+            ADMIN: <b>JOSÉ GREGORIO</b>
+        </div>
+    </div>
 
-            <div class="api-inputs">
-                <input type="text" class="api-field field-binance" placeholder="Binance API Key">
-                <input type="text" class="api-field field-bybit" placeholder="Bybit API Key">
+    <div class="grid-container">
+        <div class="module">
+            <h3>Estado del Centinela</h3>
+            <div class="visual-data">
+                <div class="circle-chart">
+                    <span style="font-size: 0.7rem;">+1.45%</span>
+                </div>
+                <div style="text-align: left;">
+                    <p style="margin: 0; font-size: 0.7rem; color:#8b949e;">DETECTADO:</p>
+                    <b style="color: var(--cian); font-size: 1.2rem;">BTC / USDT</b>
+                </div>
             </div>
+            <button class="btn-action">EJECUTAR ARBITRAJE</button>
+        </div>
 
-            <div class="op-vars">
-                <span class="var var-signal" id="data-signal">BTC/USDT</span>
-                <span class="var var-spread" id="data-spread">+1.45%</span>
-                <span class="var var-amount" id="data-amount">100 USDT</span>
+        <div class="module">
+            <h3>Conexión de Seguridad</h3>
+            <div style="margin: 10px 0;">
+                <label style="font-size: 0.6rem; color: #8b949e;">BINANCE API KEY</label>
+                <div style="background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #30363d; color: var(--cian);">
+                    ••••••••••••••••••••••••
+                </div>
             </div>
-
-            <div class="price-vars">
-                <span class="var var-binance" id="price-binance">$64,250</span>
-                <span class="var var-bybit" id="price-bybit">$65,180</span>
+            <div style="margin: 10px 0;">
+                <label style="font-size: 0.6rem; color: #8b949e;">BYBIT API KEY</label>
+                <div style="background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #30363d; color: var(--cian);">
+                    ••••••••••••••••••••••••
+                </div>
             </div>
+        </div>
 
-            <div class="gain-vars">
-                <span class="var var-total" id="gain-total">$250,000</span>
-                <span class="var var-community" id="gain-community">$3,625</span>
-                <span class="var var-jgt" id="gain-jgt">$725</span>
+        <div class="module">
+            <h3>Resumen de Beneficios</h3>
+            <div style="margin-top: 10px;">
+                <span style="font-size: 0.7rem;">TOTAL OPERADO:</span>
+                <div style="color: var(--oro); font-size: 1.8rem; margin-bottom: 10px; text-shadow: 0 0 10px var(--oro);">$250,000</div>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; border-top: 1px solid #30363d; padding-top: 10px;">
+                    <span>COMUNIDAD:</span>
+                    <span style="color: #3fb950; font-weight: bold;">$3,625</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px;">
+                    <span>CONDICIÓN JGT:</span>
+                    <span style="color: var(--cian); font-weight: bold;">$725</span>
+                </div>
             </div>
         </div>
     </div>
+
+    <div style="margin-top: 20px; text-align: center; font-size: 0.6rem; color: #444; letter-spacing: 1px;">
+        CENTINELA DE ARBITRAJE TRIANGULAR - TECNOLOGÍA PROPIA J.G.T.
+    </div>
+</div>
+
 </body>
 </html>
