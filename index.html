@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | Centinela</title>
+    <title>TRIANGULA-MAX | Panel de Control Premium</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #0b0e14; color: white; font-family: sans-serif; text-align: center;">
-    <header style="padding: 20px; border-bottom: 2px solid #d4af37;">
-        <h1>TRIANGULA-MAX</h1>
-    </header>
-    <main style="padding: 50px;">
-        <h2 style="color: #00e5ff;">Centinela Activo</h2>
-        <p>Vigilando mercados en tiempo real...</p>
-    </main>
+<body>
+    <div class="dashboard-wrapper">
+        <img src="dashboard-bg.png" alt="Dashboard Triangula-Max Background" class="dashboard-bg">
+
+        <div class="active-layer">
+            <a href="/logout" class="active-logout">LOGOUT</a>
+
+            <div class="api-inputs">
+                <input type="text" class="api-field field-binance" placeholder="Binance API Key">
+                <input type="text" class="api-field field-bybit" placeholder="Bybit API Key">
+            </div>
+
+            <div class="op-vars">
+                <span class="var var-signal" id="data-signal">BTC/USDT</span>
+                <span class="var var-spread" id="data-spread">+1.45%</span>
+                <span class="var var-amount" id="data-amount">100 USDT</span>
+            </div>
+
+            <div class="price-vars">
+                <span class="var var-binance" id="price-binance">$64,250</span>
+                <span class="var var-bybit" id="price-bybit">$65,180</span>
+            </div>
+
+            <div class="gain-vars">
+                <span class="var var-total" id="gain-total">$250,000</span>
+                <span class="var var-community" id="gain-community">$3,625</span>
+                <span class="var var-jgt" id="gain-jgt">$725</span>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
