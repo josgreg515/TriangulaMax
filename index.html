@@ -218,6 +218,43 @@
         document.getElementById('spread-live').innerText = "+" + val + "%";
     }, 3000);
 </script>
+<script>
+    async function lanzar() {
+        const botSeleccionado = document.getElementById('tipo-bot').value;
+        const parSeleccionado = document.getElementById('par-bot').value;
+        
+        // Efecto visual de carga en el botón
+        const btn = document.querySelector('.btn-action');
+        btn.innerText = "PROCESANDO...";
+        btn.style.opacity = "0.5";
 
+        try {
+            // Aquí es donde conectamos con el bot de Python (backend)
+            const respuesta = await fetch('/ejecutar-arbitraje', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    estrategia: botSeleccionado,
+                    par: parSeleccionado,
+                    usuario: "José Gregorio"
+                })
+            });
+            
+            alert("CENTINELA ACTIVO: Operación " + botSeleccionado.toUpperCase() + " iniciada con éxito.");
+        } catch (error) {
+            alert("SISTEMA EN SIMULACIÓN: Conecta el servidor de Python para operar real.");
+        } finally {
+            btn.innerText = "EJECUTAR ARBITRAJE";
+            btn.style.opacity = "1";
+        }
+    }
+
+    // Actualización de números en tiempo real (Simulada hasta conectar API)
+    setInterval(() => {
+        const spread = (1.15 + Math.random() * 0.4).toFixed(2);
+        document.getElementById('spread-live').innerText = "+" + spread + "%";
+    }, 3000);
+        </script>
+    
 </body>
 </html>
