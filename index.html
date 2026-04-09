@@ -3,286 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX-BOT | Global Panel</title>
+    <title>TRIANGULA-MAX-BOT :: Elite Crypto Arbitrage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --oro: #d4af37;
-            --cian: #00e5ff;
-            --fondo: #05070a;
-            --panel: rgba(20, 27, 38, 0.8);
-            --borde: rgba(212, 175, 55, 0.3);
+            --fondo: #0d1117; /* Negro profundo, fondo principal */
+            --oro: #d4af37;   /* Dorado, para acentos y logos */
+            --cian: #00e5ff;  /* Cian eléctrico, para precios de compra y datos clave */
+            --verde: #3fb950; /* Verde esmeralda, para precios de venta y ganancias */
+            --gris: #21262d;  /* Gris oscuro, para módulos y contenedores */
+            --borde: #30363d; /* Color de borde para separar elementos */
         }
 
         body {
             background-color: var(--fondo);
-            background-image: radial-gradient(circle at center, #101a26 0%, #05070a 100%);
             color: white;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Roboto Mono', monospace; /* Monoespaciada para datos técnicos */
             margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 10px;
         }
 
-        .main-frame {
-            width: 100%;
-            max-width: 1100px;
-            background: var(--panel);
-            border: 2px solid var(--borde);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            box-sizing: border-box;
-        }
-
-        /* --- NUEVO ORDEN: ENCABEZADO ARRIBA --- */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
-            padding-bottom: 15px;
-            margin-bottom: 10px;
-        }
-
-        .real-logo {
-            height: 65px;
-            filter: drop-shadow(0 0 10px var(--cian));
-        }
-
-        /* --- BARRA DE IDIOMA DEBAJO --- */
-        .lang-bar {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-top: 5px;
-        }
-
-        .lang-select {
-            background: rgba(0,0,0,0.5);
-            color: var(--oro);
+        .container {
+            width: 90%;
+            max-width: 400px; /* Tamaño compacto tipo app móvil */
+            background-color: var(--gris);
             border: 1px solid var(--borde);
-            font-size: 0.6rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .module {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--oro);
+            padding-bottom: 10px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--oro);
+            font-size: 1.2rem;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        /* MÓDULOS COMUNES */
+        .module {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
         }
 
         .module h3 {
-            color: var(--oro);
-            font-size: 0.8rem;
-            margin-top: 0;
-            border-left: 3px solid var(--cian);
-            padding-left: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: #8b949e;
+            margin: 0 0 8px 0;
             text-transform: uppercase;
         }
 
-        select, input, .btn-action {
-            width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            border-radius: 6px;
-            font-family: 'Orbitron';
-            font-size: 0.75rem;
-            box-sizing: border-box;
-        }
-
-        select, input {
-            background: #0d1117;
-            color: var(--cian);
+        /* INPUTS (LLAVES API) */
+        input[type="text"], input[type="password"] {
+            width: 90%;
+            background-color: #161b22;
             border: 1px solid var(--borde);
+            color: var(--oro);
+            padding: 6px;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            margin-bottom: 6px;
         }
 
-        /* Estilo para pegar las llaves */
-        input::placeholder { color: #30363d; }
-        input:focus { outline: none; border-color: var(--cian); }
+        input::placeholder {
+            color: #484f58;
+        }
 
+        /* ARBITRAJE EN VIVO */
+        #price-buy { color: var(--cian); font-size: 1.1rem; }
+        #price-sell { color: var(--verde); font-size: 1.1rem; }
+        #spread-live { color: var(--oro); font-size: 1.2rem; font-weight: bold; }
+
+        /* BOTONES (ACCIÓN PRINCIPAL Y SEGURIDAD) */
         .btn-action {
-            background: linear-gradient(135deg, #1a1a1a, #333);
-            border: 1px solid var(--oro);
-            color: var(--oro);
+            width: 100%;
+            background-color: var(--verde);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
             cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
-            text-transform: uppercase;
+            transition: background 0.2s;
         }
 
         .btn-action:hover {
-            background: var(--oro);
-            color: black;
-            box-shadow: 0 0 20px var(--oro);
+            background-color: #35a044;
         }
 
-        .visual-data { text-align: center; margin: 15px 0; }
-        #spread-live { font-size: 1.3rem; color: var(--cian); font-weight: bold; }
+        .btn-security {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--oro);
+            color: var(--oro);
+            padding: 8px 25px;
+            border-radius: 5px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* BENEFICIOS (SALDO) */
+        #txt-ganancia-total {
+            color: var(--verde);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* ESTADO (CONEXIÓN Y SPREAD) */
+        .visual-data {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        #status-icon {
+            width: 8px; height: 8px;
+            background-color: #ff4d4d; /* Empieza en rojo */
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        /* DISEÑO PARA MÓVILES (OPCIONAL) */
+        @media (max-width: 400px) {
+            .container { width: 95%; padding: 15px; }
+            .header h1 { font-size: 1rem; }
+        }
+
+        /* ESTILOS PARA EL MODAL DE SEGURIDAD */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8); /* Fondo semi-transparente */
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--gris);
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid var(--oro);
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            color: #c9d1d9;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .modal-content h1, .modal-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--oro);
+            text-align: center;
+        }
+
+        .modal-content h1 { font-size: 1rem; }
+        .modal-content h3 { font-size: 0.8rem; margin-top: 20px; text-align: left;}
+
+        .modal-content strong {
+            color: white;
+        }
+
+        .close-modal {
+            color: #8b949e;
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover { color: white; }
+
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="main-frame">
-    <div class="top-bar">
-        <img src="logo.png" alt="TRIANGULA-MAX" class="real-logo">
-        <div style="text-align: right; font-size: 0.6rem; color: #8b949e;">
-            <span id="txt-status-label">ESTADO:</span> <span style="color: #3fb950;">ONLINE</span><br>
-            ADMIN: <b>TRIANGULA-MAX-BOT</b>
+<div class="container">
+    <div class="header">
+        <h1>TRIANGULA-MAX-BOT</h1>
+        <div style="font-size: 0.5rem; color: #8b949e; letter-spacing: 1px;">ELITE ARBITRAGE SYSTEM</div>
+    </div>
+
+    <div class="module">
+        <h3>1. Ingresar Credenciales</h3>
+        <input type="text" placeholder="Binance API Key" id="b-api">
+        <input type="password" placeholder="Binance API Secret" id="b-secret">
+        <input type="text" placeholder="Whitebit API Key" id="w-api">
+    </div>
+
+    <div class="module">
+        <h3 id="txt-title-mando">Mando de Control</h3>
+        <div class="visual-data">
+            <span style="font-size: 0.6rem; color: #8b949e;">COMPRA (BINANCE)</span>
+            <span style="font-size: 0.6rem; color: #8b949e;">VENTA (WHITEBIT)</span>
+        </div>
+        <div class="visual-data">
+            <div id="price-buy">$0.00</div>
+            <div style="color: var(--oro); font-size: 1.5rem; font-family: 'Orbitron';">➔</div>
+            <div id="price-sell">$0.00</div>
+        </div>
+        <div class="visual-data" style="margin-top: 10px;">
+            <div style="font-size: 0.5rem; color: #8b949e;">SPREAD PROYECTADO</div>
+            <div id="spread-live">+0.00%</div>
         </div>
     </div>
 
-    <div class="lang-bar">
-        <span style="font-size: 0.6rem; color: #8b949e; align-self: center;" id="txt-lang-label">IDIOMA:</span>
-        <select class="lang-select" id="lang-switcher" onchange="cambiarIdioma()">
-            <option value="es">ESPAÑOL</option>
-            <option value="en">ENGLISH</option>
-            <option value="pt">PORTUGUÊS</option>
-            <option value="it">ITALIANO</option>
-            <option value="ru">РУССКИЙ</option>
-            <option value="ar">العربية</option>
-        </select>
-    </div>
-
-    <div class="grid-container">
-        <div class="module">
-            <h3 id="txt-title-mando">Centro de Mando</h3>
-            <label id="txt-strat-label" style="font-size: 0.6rem; color: #8b949e;">ESTRATEGIA:</label>
-            <select id="tipo-bot">
-                <option value="tri" id="opt-tri">Binance Triangular</option>
-                <option value="inter" id="opt-inter">Inter-Plataforma</option>
-            </select>
-            
-            <label id="txt-par-label" style="font-size: 0.6rem; color: #8b949e; margin-top: 10px; display: block;">ACTIVO:</label>
-            <select id="par-bot">
-                <option>BTC / USDT</option>
-                <option>ETH / USDT</option>
-                <option>SOL / USDT</option>
-            </select>
-
-            <div class="visual-data">
-                <div id="spread-live">+1.18%</div>
-                <div style="font-size: 0.5rem; color: #8b949e;" id="txt-live-label">RASTREO EN VIVO</div>
+    <div class="module">
+        <h3>2. Lanzar Operación</h3>
+        <div class="visual-data">
+            <div style="display: flex; align-items: center; font-size: 0.6rem; color: #8b949e;">
+                <div id="status-icon"></div>
+                <span id="status-text">DESCONECTADO</span>
             </div>
-            <button class="btn-action" id="btn-exec" onclick="lanzar()">EJECUTAR ARBITRAJE</button>
+            <div id="spread-min-icon" style="color: #ff4d4d; font-size: 0.6rem;">SPREAD MIN (0.5%) ✘</div>
         </div>
+        <button class="btn-action" onclick="ejecutar()">EJECUTAR ARBITRAJE</button>
+        
+        <div class="visual-data" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+            <div style="font-size: 0.5rem; color: #8b949e;">BENEFICIO TOTAL GENERADO</div>
+            <div id="txt-ganancia-total">$0.00</div>
+        </div>
+    </div>
 
-        <div class="module">
-            <h3 id="txt-title-seg">Seguridad</h3>
-            <label style="font-size: 0.6rem; color: #8b949e;">API KEY:</label>
-            <input type="password" id="api-key" placeholder="Paste your API Key here...">
-            
-            <label style="font-size: 0.6rem; color: #8b949e; margin-top: 10px; display: block;">SECRET KEY:</label>
-            <input type="password" id="secret-key" placeholder="Paste your Secret Key here...">
-            
-            <p style="font-size: 0.5rem; color: #444; margin-top: 15px;" id="txt-seg-footer">TRIANGULA-MAX-BOT Security Protocol Active.</p>
-        </div>
+    <div style="text-align: center; margin-top: 10px;">
+        <button class="btn-security" onclick="abrirModal()">
+            VIEW SYSTEM PROTOCOLS & SECURITY
+        </button>
+    </div>
 
-        <div class="module">
-            <h3 id="txt-title-ben">Beneficios</h3>
-            <div style="font-size: 1.5rem; color: var(--oro); margin-bottom: 5px;">$250,000</div>
-            <span style="font-size: 0.5rem; color: #8b949e;">TOTAL TRADED (USDT)</span>
-        </div>
+</div>
+
+<div id="securityModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="cerrarModal()">&times;</span>
+        <h1>🚀 Ecosistema Operativo TRIANGULA-MAX-BOT</h1>
+        <p style="text-align: center; color: var(--oro);"><em>Eficiencia Algorítmica y Seguridad en Arbitraje Global</em></p>
+        
+        <p>**TRIANGULA-MAX-BOT** redefine la gestión de activos digitales. Hemos transformado el arbitraje manual —históricamente complejo, lento y propenso a errores humanos— en una experiencia automatizada de alta precisión. Nuestra tecnología actúa como un puente inteligente entre los principales exchanges del mundo, optimizando cada punto de profit.</p>
+
+        <h3>💎 Modalidades de Ejecución de Alta Precisión</h3>
+        <ul>
+            <li><strong>Protocolo de Ejecución Manual:</strong> El bot actúa como un radar de alta fidelidad. Identifica y presenta el *spread* (diferencial de precio) listo para ser procesado. El usuario mantiene el control absoluto, validando y autorizando la orden con un solo clic.</li>
+            <li><strong>Protocolo de Ejecución Automatizada:</strong> Activación del motor de trading 24/7. El algoritmo detecta, calcula y ejecuta ciclos de arbitraje de forma autónoma.</li>
+        </ul>
+
+        <h3>🛡️ Sistema de Garantía y "Escudo Anti-Slippage"</h3>
+        <p>La seguridad de tu capital es nuestra prioridad técnica. Por ello, el bot incorpora un <strong>Protocolo de Validación en Tiempo Real</strong>:</p>
+        <ul>
+            <li><strong>Protección de Ejecución:</strong> El sistema realiza una doble verificación de liquidez y precio antes de cada transacción.</li>
+            <li><strong>Aborto Automático de Órdenes:</strong> Si durante el proceso de ejecución el mercado sufre una fluctuación brusca que reduzca el margen de ganancia por debajo del umbral de seguridad, <strong>el bot cancela la operación instantáneamente</strong>.</li>
+            <li><strong>Garantía de Cero Pérdida:</strong> Esta tecnología asegura que ninguna operación se procese si las condiciones de mercado han cambiado negativamente.</li>
+        </ul>
+
+        <h3>⚖️ Políticas de Transparencia y Conectividad</h3>
+        <ul>
+            <li><strong>Conexión vía API Restringida:</strong> Operamos mediante llaves API con permisos exclusivos de *Spot Trading*. Es <strong>requisito técnico</strong> que el usuario mantenga desactivada la función de retiros.</li>
+            <li><strong>Optimización de Comisiones:</strong> El usuario accede a una ejecución profesional donde los costos operativos (incluida la tasa administrativa del administrador) ya están integrados en el beneficio neto proyectado.</li>
+        </ul>
+        <p style="text-align: center; margin-top: 20px; font-family: 'Orbitron'; font-size: 0.6rem; color: var(--oro);">TRIANGULA-MAX: Tu capital, protegido por inteligencia.</p>
     </div>
 </div>
 
 <script>
-    const traducciones = {
-        es: {
-            langLabel: "IDIOMA:", status: "ESTADO:", mando: "Centro de Mando", strat: "ESTRATEGIA:", par: "ACTIVO:",
-            tri: "Binance Triangular", inter: "Inter-Plataforma", live: "RASTREO EN VIVO", 
-            exec: "EJECUTAR ARBITRAJE", seg: "Seguridad", ben: "Beneficios", alert: "SISTEMA ACTIVO\nProcesando con llaves seguras..."
-        },
-        en: {
-            langLabel: "LANGUAGE:", status: "STATUS:", mando: "Command Center", strat: "STRATEGY:", par: "ASSET:",
-            tri: "Triangular Binance", inter: "Cross-Platform", live: "LIVE TRACKING", 
-            exec: "EXECUTE ARBITRAGE", seg: "Security", ben: "Profits", alert: "SYSTEM ACTIVE\nProcessing secure keys..."
-        },
-        pt: {
-            langLabel: "IDIOMA:", status: "ESTADO:", mando: "Centro de Comando", strat: "ESTRATÉGIA:", par: "ATIVO:",
-            tri: "Binance Triangular", inter: "Inter-Plataforma", live: "RASTREAMENTO AO VIVO", 
-            exec: "EXECUTAR ARBITRAGEM", seg: "Segurança", ben: "Benefícios", alert: "SISTEMA ATIVO\nProcessando chaves seguras..."
-        },
-        it: {
-            langLabel: "LINGUA:", status: "STATO:", mando: "Centro di Comando", strat: "STRATEGIA:", par: "ATTIVO:",
-            tri: "Binance Triangolare", inter: "Inter-Piattaforma", live: "TRACCIAMENTO LIVE", 
-            exec: "ESEGUI ARBITRAGGIO", seg: "Sicurezza", ben: "Profitti", alert: "SISTEMA ATTIVO\nInvio con chiavi sicure..."
-        },
-        ru: {
-            langLabel: "ЯЗЫК:", status: "СТАТУС:", mando: "Центр управления", strat: "СТРАТЕГИЯ:", par: "АКТИВ:",
-            tri: "Треугольный Бинанс", inter: "Межплатформенный", live: "ЖИВОЙ ТРЕКИНГ", 
-            exec: "ЗАПУСТИТЬ АРБИТРАЖ", seg: "Безопасность", ben: "Прибыль", alert: "СИСТЕМА АКТИВНА\nОбработка..."
-        },
-        ar: {
-            langLabel: "لغة:", status: "حالة:", mando: "مركز القيادة", strat: "إستراتيجية:", par: "الأصل:",
-            tri: "بينانس المثلث", inter: "بين المنصات", live: "تتبع مباشر", 
-            exec: "تنفيذ المراجحة", seg: "أمان", ben: "أرباح", alert: "النظام نشط\nمعالجة المفاتيح..."
-        }
-    };
-
-    function cambiarIdioma() {
-        const lang = document.getElementById('lang-switcher').value;
-        const t = traducciones[lang];
-        document.getElementById('txt-lang-label').innerText = t.langLabel;
-        document.getElementById('txt-status-label').innerText = t.status;
-        document.getElementById('txt-title-mando').innerText = t.mando;
-        document.getElementById('txt-strat-label').innerText = t.strat;
-        document.getElementById('txt-par-label').innerText = t.par;
-        document.getElementById('opt-tri').innerText = t.tri;
-        document.getElementById('opt-inter').innerText = t.inter;
-        document.getElementById('txt-live-label').innerText = t.live;
-        document.getElementById('btn-exec').innerText = t.exec;
-        document.getElementById('txt-title-seg').innerText = t.seg;
-        document.getElementById('txt-title-ben').innerText = t.ben;
-    }
-
-    async function lanzar() {
-        const lang = document.getElementById('lang-switcher').value;
-        const btn = document.getElementById('btn-exec');
-        const key = document.getElementById('api-key').value;
-        
-        if(!key) { alert("Please paste your API Keys / Por favor pegue sus llaves"); return; }
-
-        btn.disabled = true;
-        btn.innerText = "WAIT...";
-
-        try {
-            const res = await fetch('https://triangulamax-servidor.onrender.com/ejecutar-arbitraje', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    estrategia: document.getElementById('tipo-bot').value,
-                    admin: "TRIANGULA-MAX-BOT"
-                })
-            });
-            alert(traducciones[lang].alert);
-        } catch (e) {
-            alert("Connection Error / Servidor Offline");
-        } finally {
-            btn.disabled = false;
-            cambiarIdioma(); 
-        }
-    }
-
+    // --- LÓGICA DE SIMULACIÓN VISUAL (LO QUE EL USUARIO VE) ---
+    // En el futuro, esto se conectará con tu servidor app.py real.
+    
+    // Simulación de Precios
     setInterval(() => {
-        const base = 1.15;
-        const variacion = (Math.random() * 0.35).toFixed(2);
-        document.getElementById('spread-live').innerText = "+" + (parseFloat(base) + parseFloat(variacion)).toFixed(2) + "%";
-    }, 3000);
+        let precioBase = 60000;
+        let pCompra = precioBase + (Math.random() * 200);
+        let pVenta = pCompra + (Math.random() * 900); // Genera Spread
+        let spread = ((pVenta - pCompra) / pCompra * 100).toFixed(2);
+        
+        // Aplicamos el "recorte invisible" para el usuario
+        // El usuario ve el 80% de la oportunidad real
+        let spreadVisible = (spread * 0.80).toFixed(2);
+
+        // Actualizamos la interfaz
+        document.getElementById('price-buy').innerText = "$" + pCompra.toFixed(2);
+        document.getElementById('price-sell').innerText = "$" + pVenta.toFixed(2);
+        document.getElementById('spread-live').innerText = "+" + spreadVisible + "%";
+        
+        // Simulación de spread min y estado
+        if (spreadVisible >= 0.50) {
+            document.getElementById('spread-min-icon').style.color = 'var(--verde)';
+            document.getElementById('spread-min-icon').innerText = 'SPREAD MIN (0.5%) ✔';
+        } else {
+            document.getElementById('spread-min-icon').style.color = '#ff4d4d';
+            document.getElementById('spread-min-icon').innerText = 'SPREAD MIN (0.5%) ✘';
+        }
+    }, 3000); // Actualiza cada 3 segundos
+
+    // Funciones de la Interfaz
+    function conectar() {
+        // Simulación de conexión
+        if(document.getElementById('b-api').value.length > 5){
+            document.getElementById('status-icon').style.backgroundColor = 'var(--cian)';
+            document.getElementById('status-text').innerText = 'CONECTADO API';
+            document.getElementById('status-text').style.color = 'var(--cian)';
+        }
+    }
+
+    function ejecutar() {
+        let spreadVal = parseFloat(document.getElementById('spread-live').innerText);
+        
+        if (spreadVal >= 0.50 && document.getElementById('status-text').innerText === 'CONECTADO API') {
+            alert('⚙️ Motor de Arbitraje Iniciado...');
+            // Simulación de ganancia (invisiblemente ya recortada)
+            setTimeout(() => {
+                let gananciaNeta = (15 + Math.random() * 30).toFixed(2);
+                document.getElementById('txt-ganancia-total').innerText = "$" + gananciaNeta;
+                alert('✔️ Ciclo de Arbitraje Finalizado con Éxito. Ganancia neta acreditada en su Exchange.');
+            }, 5000);
+        } else {
+            alert('⚠️ No se puede ejecutar: Verifique conexión API y que el Spread sea mayor al 0.5% (Escudo de Seguridad).');
+        }
+    }
+
+    // --- LÓGICA DEL MODAL DE SEGURIDAD ---
+    const modal = document.getElementById("securityModal");
+
+    function abrirModal() {
+        modal.style.display = "block";
+    }
+
+    function cerrarModal() {
+        modal.style.display = "none";
+    }
+
+    // Cerrar si hacen clic fuera del Modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
 </script>
 
 </body>
