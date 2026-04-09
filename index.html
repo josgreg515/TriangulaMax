@@ -37,30 +37,30 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Cabecera con el LOGO REAL integrado */
+        /* Cabecera con el LOGO REAL integrado (MÁS GRANDE) */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             margin-bottom: 20px;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px; /* Aumentado el espacio */
         }
 
         .real-logo {
-            height: 45px;
+            height: 70px; /* AUMENTADO EL TAMAÑO */
             width: auto;
-            filter: drop-shadow(0 0 10px var(--cian));
+            filter: drop-shadow(0 0 15px var(--cian)); /* Brillo aumentado */
         }
 
         .logo-area h1 {
-            font-size: 1.6rem;
+            font-size: 1.8rem; /* Ligeramente aumentado */
             margin: 0;
             background: linear-gradient(to right, #fff, var(--cian));
             -webkit-background-clip: text;
@@ -68,7 +68,7 @@
             letter-spacing: 2px;
         }
 
-        /* Grid de Módulos (Reales y Funcionales) */
+        /* Grid de Módulos */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
