@@ -1,75 +1,84 @@
 :root {
-    --oro: #d4af37;
     --cian: #00e5ff;
+    --oro: #d4af37;
     --fondo: #0b0e14;
-    --tarjeta: #161b22;
 }
 
 body {
     background-color: var(--fondo);
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    font-family: sans-serif;
 }
 
-header {
+.dashboard-wrapper {
+    position: relative;
+    max-width: 100%;
+}
+
+.dashboard-bg {
+    display: block;
     width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-bottom: 1px solid #30363d;
+    height: auto;
 }
 
-.logo { height: 60px; }
+/* Capa de módulos activos con posición absoluta */
+.active-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
-.status-bar {
-    color: #3fb950;
+/* Estilos para el botón de LOGOUT real */
+.active-logout {
+    position: absolute;
+    top: 3.5%;
+    right: 5%;
+    color: white;
+    text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
-}
-
-.dot {
-    height: 10px;
-    width: 10px;
-    background-color: #3fb950;
-    border-radius: 50%;
-    display: inline-block;
-    box-shadow: 0 0 10px #3fb950;
-}
-
-.dashboard { margin-top: 50px; }
-
-.card {
-    background: var(--tarjeta);
-    border: 1px solid var(--oro);
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
-}
-
-.price-box h3 {
-    font-size: 2.5rem;
-    color: var(--cian);
-    margin: 10px 0;
-}
-
-.btn-action {
-    background: var(--oro);
-    color: black;
-    border: none;
-    padding: 15px 30px;
-    font-weight: bold;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+    border: 1px solid white;
 }
 
-.btn-action:hover {
-    background: var(--cian);
-    transform: scale(1.05);
+/* Estilos para los campos de entrada de API reales */
+.api-inputs { position: absolute; top: 54%; left: 9.5%; width: 23%; height: 13%; }
+.api-field {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: 5px 0;
 }
+.field-binance { position: absolute; top: 0; }
+.field-bybit { position: absolute; top: 50%; }
+
+/* Estilos de variables de datos compartidos */
+.var { font-weight: bold; text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); }
+
+/* Posiciones para el Estado del Operador */
+.op-vars { position: absolute; top: 70%; left: 38%; width: 27%; height: 6%; color: white; }
+.var-signal { position: absolute; left: 0; }
+.var-spread { position: absolute; left: 40%; color: #3fb950; }
+.var-amount { position: absolute; left: 80%; }
+
+/* Posiciones para los Precios de Detección */
+.price-vars { position: absolute; top: 85%; left: 24%; width: 10%; height: 10%; color: var(--oro); }
+.var-binance { position: absolute; top: 0; }
+.var-bybit { position: absolute; top: 50%; }
+
+/* Posiciones para los Datos de Ganancia */
+.gain-vars { position: absolute; top: 54%; left: 88%; width: 10%; height: 16%; text-align: right; }
+.var-total { position: absolute; top: 0; color: var(--oro); }
+.var-community { position: absolute; top: 38%; color: #3fb950; }
+.var-jgt { position: absolute; top: 76%; color: var(--cian); }
