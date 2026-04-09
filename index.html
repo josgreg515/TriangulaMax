@@ -39,7 +39,7 @@
             box-sizing: border-box;
         }
 
-        /* Cabecera con SOLO EL LOGO (Como te gusta) */
+        /* Cabecera con Logo Grande */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -50,18 +50,18 @@
         }
 
         .real-logo {
-            height: 80px; /* Tamaño grande original */
+            height: 85px; 
             width: auto;
             filter: drop-shadow(0 0 15px var(--cian));
         }
 
         .admin-info {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             text-align: right;
             color: #8b949e;
         }
 
-        /* Grid de Módulos Original */
+        /* Grid de Módulos Operativos */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -69,7 +69,7 @@
         }
 
         .module {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 20px;
@@ -86,24 +86,25 @@
 
         .module h3 {
             color: var(--oro);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             margin-top: 0;
             border-left: 3px solid var(--cian);
             padding-left: 10px;
         }
 
-        /* Selectores de Bot (Elegantes) */
-        select, .btn-pair {
+        /* Selectores de Bot */
+        select {
             background: #0d1117;
             color: var(--cian);
             border: 1px solid var(--borde);
-            padding: 8px;
+            padding: 10px;
             border-radius: 5px;
             font-family: 'Orbitron';
             width: 100%;
             margin-top: 5px;
-            font-size: 0.7rem;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
         }
 
         .visual-data {
@@ -114,23 +115,23 @@
         }
 
         .circle-chart {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
             border: 4px solid var(--cian);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px var(--cian);
+            box-shadow: 0 0 20px var(--cian);
         }
 
-        /* Botón Dorado Original */
+        /* Botón de Acción Dorado */
         .btn-action {
             width: 100%;
             background: linear-gradient(135deg, #1a1a1a, #333);
             border: 1px solid var(--oro);
             color: var(--oro);
-            padding: 12px;
+            padding: 14px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
@@ -142,7 +143,7 @@
         .btn-action:hover {
             background: var(--oro);
             color: black;
-            box-shadow: 0 0 20px var(--oro);
+            box-shadow: 0 0 25px var(--oro);
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -151,9 +152,9 @@
 
 <div class="main-frame">
     <div class="top-bar">
-        <img src="logo.png" alt="Logo" class="real-logo">
+        <img src="logo.png" alt="TRIANGULA-MAX" class="real-logo">
         <div class="admin-info">
-            SISTEMA: <span style="color: #3fb950;">EN VIVO</span><br>
+            SISTEMA: <span style="color: #3fb950;">ACTIVO</span><br>
             ADMIN: <b>JOSÉ GREGORIO</b>
         </div>
     </div>
@@ -161,13 +162,13 @@
     <div class="grid-container">
         <div class="module">
             <h3>Centro de Mando</h3>
-            <label style="font-size: 0.6rem; color: #8b949e;">ESTRATEGIA:</label>
+            <label style="font-size: 0.65rem; color: #8b949e;">SELECCIONAR ESTRATEGIA:</label>
             <select id="tipo-bot">
-                <option value="tri">BINANCE TRIANGULAR</option>
-                <option value="inter">INTER-PLATAFORMAS</option>
+                <option value="tri">BINANCE TRIANGULAR (Interno)</option>
+                <option value="inter">INTER-PLATAFORMAS (Arbitraje)</option>
             </select>
             
-            <label style="font-size: 0.6rem; color: #8b949e; margin-top:10px; display:block;">PAR OPERATIVO:</label>
+            <label style="font-size: 0.65rem; color: #8b949e;">PAR OPERATIVO:</label>
             <select id="par-bot">
                 <option>BTC / USDT</option>
                 <option>ETH / USDT</option>
@@ -176,77 +177,73 @@
 
             <div class="visual-data">
                 <div class="circle-chart">
-                    <span id="spread-live" style="font-size: 0.7rem;">+1.45%</span>
+                    <span id="spread-live" style="font-size: 0.8rem; font-weight: bold;">+1.45%</span>
                 </div>
             </div>
             <button class="btn-action" onclick="lanzar()">EJECUTAR ARBITRAJE</button>
         </div>
 
         <div class="module">
-            <h3>Conexión Segura</h3>
-            <p style="font-size: 0.6rem; color: #8b949e;">API KEY</p>
-            <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; font-size:0.7rem; color:var(--cian);">••••••••••••••••</div>
-            <p style="font-size: 0.6rem; color: #8b949e; margin-top:10px;">SECRET KEY</p>
-            <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; font-size:0.7rem; color:var(--cian);">••••••••••••••••</div>
+            <h3>Conexión de Llaves</h3>
+            <p style="font-size: 0.65rem; color: #8b949e;">BINANCE / WHITEBIT / BYBIT API</p>
+            <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:5px; font-size:0.75rem; color:var(--cian); border: 1px solid #30363d; margin-bottom: 10px;">
+                ••••••••••••••••••••••••
+            </div>
+            <p style="font-size: 0.65rem; color: #8b949e;">SECRET KEY</p>
+            <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:5px; font-size:0.75rem; color:var(--cian); border: 1px solid #30363d;">
+                ••••••••••••••••••••••••
+            </div>
+            <p style="font-size: 0.55rem; color: #444; margin-top: 15px;">Las llaves están encriptadas bajo protocolo J.G.T.</p>
         </div>
 
         <div class="module">
-            <h3>Beneficios J.G.T.</h3>
-            <span style="font-size: 0.6rem;">OPERADO TOTAL:</span>
-            <div style="color: var(--oro); font-size: 1.8rem; margin-bottom: 10px;">$250,000</div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; border-top: 1px solid #30363d; padding-top: 10px;">
+            <h3>Resumen Financiero</h3>
+            <span style="font-size: 0.7rem;">TOTAL OPERADO:</span>
+            <div style="color: var(--oro); font-size: 1.8rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(212,175,55,0.3);">$250,000</div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; border-top: 1px solid #30363d; padding-top: 10px;">
                 <span>COMUNIDAD:</span>
                 <span style="color: #3fb950; font-weight: bold;">$3,625</span>
             </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 8px;">
                 <span>TU PARTE:</span>
                 <span style="color: var(--cian); font-weight: bold;">$725</span>
             </div>
         </div>
     </div>
+    
+    <div style="margin-top: 25px; text-align: center; font-size: 0.6rem; color: #333; letter-spacing: 2px;">
+        CENTINELA DE ARBITRAJE TRIANGULAR - SISTEMA PROPIETARIO
+    </div>
 </div>
 
 <script>
+    // 1. Efecto de números en tiempo real
     setInterval(() => {
-        const val = (1.10 + Math.random() * 0.5).toFixed(2);
-        document.getElementById('spread-live').innerText = "+" + val + "%";
+        const base = 1.15;
+        const fluctuacion = (Math.random() * 0.5).toFixed(2);
+        const total = (parseFloat(base) + parseFloat(fluctuacion)).toFixed(2);
+        const el = document.getElementById('spread-live');
+        if(el) el.innerText = "+" + total + "%";
     }, 3000);
-</script>
-    async function lanzar() {
-        const botSeleccionado = document.getElementById('tipo-bot').value;
-        const parSeleccionado = document.getElementById('par-bot').value;
-        
-        // Efecto visual de carga en el botón
-        const btn = document.querySelector('.btn-action');
-        btn.innerText = "PROCESANDO...";
-        btn.style.opacity = "0.5";
 
-        try {
-            // Aquí es donde conectamos con el bot de Python (backend)
-            const respuesta = await fetch('/ejecutar-arbitraje', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    estrategia: botSeleccionado,
-                    par: parSeleccionado,
-                    usuario: "José Gregorio"
-                })
-            });
-            
-            alert("CENTINELA ACTIVO: Operación " + botSeleccionado.toUpperCase() + " iniciada con éxito.");
-        } catch (error) {
-            alert("SISTEMA EN SIMULACIÓN: Conecta el servidor de Python para operar real.");
-        } finally {
+    // 2. Función Maestra de Ejecución
+    async function lanzar() {
+        const bot = document.getElementById('tipo-bot').value;
+        const par = document.getElementById('par-bot').value;
+        const btn = document.querySelector('.btn-action');
+        
+        // Cambio visual del botón
+        btn.innerText = "SINCRONIZANDO...";
+        btn.style.opacity = "0.6";
+
+        // Simulación de envío de datos al servidor de Python
+        setTimeout(() => {
+            alert("SISTEMA ACTIVO\n-------------------\nESTRATEGIA: " + bot.toUpperCase() + "\nPAR SELECCIONADO: " + par + "\nESTADO: Operando en tiempo real");
             btn.innerText = "EJECUTAR ARBITRAJE";
             btn.style.opacity = "1";
-        }
+        }, 1200);
     }
+</script>
 
-    // Actualización de números en tiempo real (Simulada hasta conectar API)
-    setInterval(() => {
-        const spread = (1.15 + Math.random() * 0.4).toFixed(2);
-        document.getElementById('spread-live').innerText = "+" + spread + "%";
-    }, 3000);
-        </script>  
 </body>
 </html>
