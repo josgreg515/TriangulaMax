@@ -1,141 +1,41 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | José Gregorio Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --oro: #d4af37; --cian: #00e5ff; --fondo: #0a0e14; --panel: rgba(16, 22, 30, 0.98); --borde: #d4af37; --verde: #3fb950; --rojo: #ff4d4d; --gris: #8b949e; }
-        body { background: #000; color: white; font-family: 'Orbitron', sans-serif; margin: 0; display: flex; justify-content: center; padding: 10px; min-height: 100vh; }
-        .phone-frame { width: 100%; max-width: 420px; background: var(--panel); border: 2px solid #333; border-radius: 40px; padding: 20px; box-sizing: border-box; box-shadow: 0 0 30px rgba(0,0,0,0.9); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
-        .tm-logo { color: var(--oro); font-size: 2rem; font-weight: bold; border-right: 2px solid var(--oro); padding-right: 10px; }
-        .tm-text { font-size: 0.6rem; color: #fff; }
-        .flags { font-size: 0.9rem; cursor: pointer; letter-spacing: 2px; }
-        .user-tag { text-align: center; font-size: 0.65rem; color: var(--gris); margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 5px; }
-        .nav-main { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 15px; }
-        .nav-btn { background: #1c2128; border: 1px solid #333; color: var(--gris); padding: 8px 2px; font-size: 0.45rem; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
-        .nav-btn.active { border-color: var(--oro); color: var(--oro); }
-        .nav-btn.admin { border-color: var(--rojo); color: var(--rojo); font-weight: bold; }
-        .sub-panel { display: none; }
-        .sub-panel.active { display: block; }
-        .section-title { color: var(--oro); text-align: center; font-size: 0.9rem; margin: 10px 0; border: 1px solid var(--oro); border-radius: 5px; padding: 5px; }
-        .monitor-box { border: 1px solid var(--cian); border-radius: 10px; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.4); }
-        .monitor-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .chart-sim { height: 40px; width: 100%; border-bottom: 1px solid var(--cian); position: relative; margin-bottom: 10px; }
-        .chart-line { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.2) 50%, transparent 100%); animation: scan 2s infinite linear; }
-        .price-display { font-family: 'Roboto Mono'; font-size: 0.8rem; }
-        .price-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-        .scan-box { border: 1px solid var(--verde); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-size: 0.6rem; }
-        .log-box { border: 1px solid #444; border-radius: 10px; padding: 10px; background: #05070a; font-family: 'Roboto Mono'; }
-        .log-content { font-size: 0.55rem; height: 80px; overflow-y: auto; }
-        .btn-security { width: 100%; background: rgba(0, 229, 255, 0.1); border: 1px solid var(--cian); color: var(--cian); padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 0.6rem; cursor: pointer; }
-        input { width: 100%; background: #000; border: 1px solid #444; color: var(--oro); padding: 8px; margin: 5px 0; border-radius: 5px; box-sizing: border-box; }
-        @keyframes scan { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
-    </style>
-</head>
-<body>
-
-<div class="phone-frame">
-    <div class="header">
-        <div class="logo-area"><div class="tm-logo">TM</div><div class="tm-text">TRIANGULA-MAX</div></div>
-        <div class="flags" onclick="changeLang()">🇪🇸 🇬🇧 🇵🇹 🇮🇹 🇷🇺 🇦🇷</div>
-    </div>
-    <div class="user-tag">José Gregorio Edition</div>
-
-    <div class="nav-main">
-        <button class="nav-btn active" onclick="showTab('arb', this)">Arbitraje</button>
-        <button class="nav-btn" onclick="showTab('hist', this)">Historial</button>
-        <button class="nav-btn" onclick="showTab('keys', this)">Llaves API</button>
-        <button class="nav-btn admin" onclick="showTab('adm', this)">⚙️ Admin</button>
-    </div>
-
-    <div id="arb" class="sub-panel active">
-        <div class="section-title" id="t-arb">ARBITRAJE</div>
-        <div class="monitor-box">
-            <div class="monitor-head">
-                <div id="l-mon">Monitor en Vivo<br><small>REAL-TIME PROFIT/LOSS</small></div>
-                <div style="color:var(--rojo); text-align:right;">▼ -0.15%<br><small>USDT/SOL/MATIC</small></div>
-            </div>
-            <div class="chart-sim"><div class="chart-line"></div></div>
-            <div class="price-display">
-                <div class="price-row"><span>BINANCE:</span> <span id="val-b" class="price-val">$1.0000</span></div>
-                <div class="price-row"><span>WHITEBIT:</span> <span id="val-w" class="price-val">$0.9985</span></div>
-                <div class="price-row" style="color:var(--oro); border-top:1px dashed #333; padding-top:5px;"><span>SPREAD:</span> <span id="val-s">+1.502%</span></div>
-            </div>
-        </div>
-        <div class="scan-box"><div style="color:var(--verde)">● ESCANEO ACTIVO: USDT/SOL...</div></div>
-        <div class="log-box">
-            <div class="log-content" id="log">
-                <div>[14:32:01] COMPRA SOL/USDT | BNCE</div>
-                <div>[14:32:05] VENTA SOL/USDT | WHIT</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="adm" class="sub-panel">
-        <div class="section-title">ADMINISTRACIÓN</div>
-        <label style="font-size:0.6rem; color:var(--oro)">PRECIO BINANCE ($):</label>
-        <input type="number" id="in-b" value="1.0000" step="0.0001">
-        <label style="font-size:0.6rem; color:var(--oro)">PRECIO WHITEBIT ($):</label>
-        <input type="number" id="in-w" value="0.9985" step="0.0001">
-        <button onclick="updatePrices()" style="width:100%; background:var(--verde); color:white; border:none; padding:10px; margin-top:10px; border-radius:5px; cursor:pointer;">APLICAR CAMBIOS</button>
-    </div>
-
-    <div id="keys" class="sub-panel">
-        <div class="section-title">LLAVES API</div>
-        <input type="password" placeholder="API Key">
-        <input type="password" placeholder="Secret Key">
-        <button style="width:100%; background:var(--oro); color:black; border:none; padding:10px; border-radius:5px;">GUARDAR LLAVES</button>
-    </div>
-
-    <div id="hist" class="sub-panel"><div class="section-title">HISTORIAL</div><div class="log-box" style="height:200px">Sin transacciones recientes.</div></div>
-
-    <button class="btn-security" onclick="alert('ESCUDO ACTIVO:\n1. Llaves Cifradas\n2. Redes Baratas (SOL/MATIC)\n3. Retiro bloqueado a terceros.')">
-        ℹ️ Información de Seguridad y Privacidad
-    </button>
-</div>
-
 <script>
-    let currentL = 'es';
-    const texts = {
-        es: {t:"ARBITRAJE", m:"Monitor en Vivo"},
-        en: {t:"ARBITRAGE", m:"Live Monitor"}
-    };
+    // MOTOR DE DATOS (Simulando la respuesta de Criptoya para Binance/Kucoin)
+    function actualizarMonitorCriptoya() {
+        // Datos base de monedas baratas (SOL/USDT)
+        const precioBase = 100 + (Math.random() * 2); // Simula fluctuación real
+        const spread = (Math.random() * 2.5).toFixed(3); // Spread dinámico entre 0 y 2.5%
+        
+        const valB = precioBase.toFixed(4);
+        const valK = (precioBase * (1 + spread/100)).toFixed(4);
 
-    function showTab(id, btn) {
-        document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    function changeLang() {
-        currentL = currentL === 'es' ? 'en' : 'es';
-        document.getElementById('t-arb').innerText = texts[currentL].t;
-        document.getElementById('l-mon').innerHTML = texts[currentL].m + '<br><small>REAL-TIME PROFIT/LOSS</small>';
-    }
-
-    function updatePrices() {
-        const b = document.getElementById('in-b').value;
-        const w = document.getElementById('in-w').value;
-        document.getElementById('val-b').innerText = '$' + b;
-        document.getElementById('val-w').innerText = '$' + w;
-        const spread = ((Math.abs(b-w)/b)*100).toFixed(3);
+        // Inyectar en el Monitor Live que aprobaste
+        document.getElementById('val-b').innerText = '$' + valB; // Precio Binance
+        document.getElementById('val-w').innerText = '$' + valK; // Precio Kucoin (usamos el espacio de Whitebit para Kucoin)
         document.getElementById('val-s').innerText = '+' + spread + '%';
-        alert("¡Precios Actualizados!");
-        showTab('arb', document.querySelector('.nav-btn'));
+        
+        // Cambiar color del spread según rentabilidad
+        const spreadElem = document.getElementById('val-s');
+        if(spread > 1.2) {
+            spreadElem.style.color = "var(--verde)";
+            actualizarLog(`Oportunidad detectada: +${spread}% en SOL/USDT (Red Solana)`);
+        } else {
+            spreadElem.style.color = "var(--oro)";
+        }
     }
 
-    setInterval(() => {
+    // BITÁCORA DE TRANSACCIONES VIVA
+    function actualizarLog(mensaje) {
         const log = document.getElementById('log');
         const time = new Date().toLocaleTimeString();
         const entry = document.createElement('div');
-        entry.innerHTML = `<span style="color:var(--gris)">[${time}]</span> Escaneando SOL/USDT...`;
+        entry.style.marginBottom = "5px";
+        entry.innerHTML = `<span style="color:var(--gris)">[${time}]</span> ${mensaje}`;
         log.prepend(entry);
-    }, 5000);
+        
+        // Mantener solo las últimas 10 entradas para no saturar
+        if (log.children.length > 10) log.lastChild.remove();
+    }
+
+    // Iniciar el "latido" cada 4 segundos
+    setInterval(actualizarMonitorCriptoya, 4000);
 </script>
-</body>
-</html>
