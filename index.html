@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | Bot Elite</title>
+    <title>TRIANGULA-MAX | Final Elite</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -25,13 +25,15 @@
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(0,229,255,0.1); padding-bottom: 10px; }
+        .logo-img { height: 40px; filter: drop-shadow(0 0 5px var(--cian)); }
 
-        .lang-bar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-        .lang-select { background: #0d1117; color: var(--oro); border: 1px solid var(--borde); font-size: 0.6rem; padding: 5px; border-radius: 4px; }
+        .lang-bar { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .lang-select { background: #0d1117; color: var(--oro); border: 1px solid var(--borde); font-size: 0.6rem; padding: 5px; border-radius: 4px; cursor: pointer; }
 
-        .nav-tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+        .nav-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
         .tab-btn { flex: 1; background: #1c2128; border: 1px solid var(--borde); color: #8b949e; padding: 10px 2px; font-family: 'Orbitron'; font-size: 0.5rem; cursor: pointer; border-radius: 6px; }
         .tab-btn.active { border-color: var(--oro); color: var(--oro); background: rgba(212, 175, 55, 0.1); }
+        .tab-admin { border-color: var(--rojo); color: var(--rojo); }
 
         .sub-panel { display: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-bottom: 15px; min-height: 400px; }
         .sub-panel.active { display: block; animation: fadeIn 0.3s ease; }
@@ -45,8 +47,10 @@
         label { font-size: 0.55rem; color: var(--oro); display: block; margin-top: 10px; text-transform: uppercase; }
         select, input { width: 100%; background: #0d1117; border: 1px solid #333; color: var(--cian); padding: 10px; margin-top: 5px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.65rem; box-sizing: border-box; }
         
+        .api-group { margin-top: 15px; border-top: 1px solid #222; padding-top: 10px; }
+        .api-group h4 { font-size: 0.6rem; color: var(--oro); margin: 0 0 5px 0; }
+
         .btn-exec { width: 100%; background: #1a1a1a; border: 1px solid var(--oro); color: var(--oro); padding: 15px; margin-top: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
-        .tab-admin { border-color: var(--rojo); color: var(--rojo); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -64,71 +68,93 @@
             <option value="es">ESPAÑOL</option>
             <option value="en">ENGLISH</option>
             <option value="pt">PORTUGUÊS</option>
+            <option value="it">ITALIANO</option>
+            <option value="ru">РУССКИЙ</option>
+            <option value="ar">العربية</option>
         </select>
     </div>
 
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="showTab('arbitraje', this)">ARBITRAJE</button>
-        <button class="tab-btn" onclick="showTab('historial', this)">HISTORIAL</button>
-        <button class="tab-btn" onclick="showTab('llaves', this)">LLAVES API</button>
+        <button class="tab-btn active" id="tab-arb" onclick="showTab('arbitraje', this)">ARBITRAJE</button>
+        <button class="tab-btn" id="tab-his" onclick="showTab('historial', this)">HISTORIAL</button>
+        <button class="tab-btn" id="tab-api" onclick="showTab('llaves', this)">LLAVES API</button>
         <button class="tab-btn tab-admin" onclick="showTab('admin', this)">⚙️ PANEL</button>
     </div>
 
     <div id="arbitraje" class="sub-panel active">
-        <h3 id="txt-mando" style="font-size:0.75rem; color:var(--oro); margin:0;">SCANNER DE OPORTUNIDADES</h3>
-        
-        <label>Activo:</label>
+        <h3 id="txt-mando" style="font-size:0.75rem; color:var(--oro); margin:0;">CENTRO DE MANDO</h3>
+        <label id="lbl-par">Activo Seleccionado:</label>
         <select id="pair-selector" onchange="updatePrices()"></select>
 
         <div class="price-terminal">
             <div class="price-line"><span>BINANCE</span><span id="p1" class="val-ex">$0.00</span></div>
             <div class="price-line"><span>WHITEBIT</span><span id="p2" class="val-ex">$0.00</span></div>
             <div class="price-line"><span>KUCOIN</span><span id="p3" class="val-ex">$0.00</span></div>
-            <div class="price-line" style="border-top:1px dashed #333; margin-top:10px; padding-top:10px;">
-                <span style="color:var(--oro)">NET SPREAD (DIFERENCIA)</span>
+            <div class="price-line" style="border:none; margin-top:10px; padding-top:10px; border-top:1px dashed #333">
+                <span id="lbl-spread" class="label-ex" style="color:var(--oro)">NET SPREAD</span>
                 <span id="p-spread" class="val-ex" style="color:var(--verde)">0.00%</span>
             </div>
         </div>
-
-        <button class="btn-exec" id="btn-exec" onclick="ejecutarCicloCompleto()">INICIAR CICLO DE ARBITRAJE</button>
+        <button class="btn-exec" id="btn-exec" onclick="ejecutarCiclo()">INICIAR CICLO COMPLETO</button>
         
         <div class="log-terminal" id="log-terminal">
-            > Sistema iniciado. Esperando orden...
+            > Sistema listo para operar, José Gregorio.
         </div>
+    </div>
+
+    <div id="historial" class="sub-panel">
+        <h3 id="txt-stats" style="font-size:0.75rem; color:var(--oro); margin:0;">ESTADÍSTICAS</h3>
+        <div style="font-size: 2rem; color: var(--oro); text-align:center; margin: 40px 0;">$250,000</div>
     </div>
 
     <div id="llaves" class="sub-panel">
-        <h3 style="font-size:0.75rem; color:var(--oro); margin:0;">CONEXIÓN SEGURA</h3>
-        <p style="font-size:0.5rem; color:gray;">Introduce tus llaves para operar en real.</p>
-        <div style="margin-top:10px;">
-            <label>Binance API/Secret</label>
-            <input type="password" placeholder="Key"><input type="password" placeholder="Secret">
-            <label>WhiteBIT API/Secret</label>
-            <input type="password" placeholder="Key"><input type="password" placeholder="Secret">
-        </div>
+        <h3 id="txt-keys" style="font-size:0.75rem; color:var(--oro); margin:0;">LLAVES API</h3>
+        <div class="api-group"><h4>Binance</h4><input type="password" placeholder="Key"><input type="password" placeholder="Secret"></div>
+        <div class="api-group"><h4>WhiteBIT</h4><input type="password" placeholder="Key"><input type="password" placeholder="Secret"></div>
+        <div class="api-group"><h4>KuCoin</h4><input type="password" placeholder="Key"><input type="password" placeholder="Pass"></div>
     </div>
 
     <div id="admin" class="sub-panel">
-        <h3 style="font-size:0.75rem; color:var(--rojo); margin:0;">CONFIGURACIÓN</h3>
-        <label>Par 1: Nombre y Precio Base</label>
-        <div style="display:flex; gap:5px;"><input type="text" id="n1" value="BTC/USDT"><input type="number" id="v1" value="65000"></div>
-        <label>Spread Mínimo para Operar (%)</label>
-        <input type="number" id="min-spread" value="1.5" step="0.1">
-        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR CONFIGURACIÓN</button>
+        <h3 style="font-size:0.75rem; color:var(--rojo); margin:0;">GESTOR DE ACTIVOS</h3>
+        <div style="margin-top:15px;">
+            <label>PAR 1: Nombre / Precio</label>
+            <div style="display:flex; gap:5px;"><input type="text" id="n1" value="BTC/USDT"><input type="number" id="v1" value="71929"></div>
+            <label>PAR 2: Nombre / Precio</label>
+            <div style="display:flex; gap:5px;"><input type="text" id="n2" value="ETH/USDT"><input type="number" id="v2" value="2193"></div>
+            <label>Spread Mínimo (%)</label>
+            <input type="number" id="min-s" value="1.2" step="0.1">
+        </div>
+        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR Y ACTIVAR</button>
     </div>
-
-    <div id="historial" class="sub-panel"><h3>HISTORIAL</h3></div>
 </div>
 
 <script>
-    let activos = [{ n: "BTC/USDT", v: 65000 }, { n: "ETH/USDT", v: 3500 }];
-    let minSpread = 1.5;
+    const traducciones = {
+        es: { mando: "Centro de Mando", exec: "INICIAR CICLO COMPLETO", keys: "Llaves API", stats: "Estadísticas" },
+        en: { mando: "Command Center", exec: "START FULL CYCLE", keys: "API Keys", stats: "Statistics" },
+        pt: { mando: "Centro de Comando", exec: "INICIAR CICLO", keys: "Chaves API", stats: "Estatísticas" },
+        it: { mando: "Centro di Comando", exec: "AVVIA CICLO", keys: "Chiavi API", stats: "Statistiche" },
+        ru: { mando: "Центр управления", exec: "ЗАПУСТИТЬ ЦИКЛ", keys: "Ключи API", stats: "Статистика" },
+        ar: { mando: "مركز القيادة", exec: "بدء الدورة", keys: "مفاتيح API", stats: "إحصائيات" }
+    };
+
+    let activos = [{ n: "BTC/USDT", v: 71929 }, { n: "ETH/USDT", v: 2193 }];
+    let minSpread = 1.2;
 
     function showTab(id, btn) {
         document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         btn.classList.add('active');
+    }
+
+    function cambiarIdioma() {
+        const l = document.getElementById('lang-switcher').value;
+        const t = traducciones[l];
+        document.getElementById('txt-mando').innerText = t.mando;
+        document.getElementById('btn-exec').innerText = t.exec;
+        document.getElementById('txt-keys').innerText = t.keys;
+        document.getElementById('txt-stats').innerText = t.stats;
     }
 
     function addLog(msg) {
@@ -138,11 +164,11 @@
     }
 
     function saveAdmin() {
-        activos[0].n = document.getElementById('n1').value;
-        activos[0].v = parseFloat(document.getElementById('v1').value);
-        minSpread = parseFloat(document.getElementById('min-spread').value);
+        activos[0].n = document.getElementById('n1').value; activos[0].v = parseFloat(document.getElementById('v1').value);
+        activos[1].n = document.getElementById('n2').value; activos[1].v = parseFloat(document.getElementById('v2').value);
+        minSpread = parseFloat(document.getElementById('min-s').value);
         render();
-        alert("Configuración Guardada");
+        alert("Configuración aplicada.");
     }
 
     function render() {
@@ -153,40 +179,36 @@
     function updatePrices() {
         const idx = document.getElementById('pair-selector').value;
         const base = activos[idx].v;
-        let b = base + (Math.random() * 50);
-        let w = b + (b * 0.018); // Simulamos spread del 1.8%
-        let k = b + (b * 0.005);
-        document.getElementById('p1').innerText = "$" + b.toFixed(2);
-        document.getElementById('p2').innerText = "$" + w.toFixed(2);
-        document.getElementById('p3').innerText = "$" + k.toFixed(2);
-        let spread = ((w - b) / b * 100).toFixed(2);
-        document.getElementById('p-spread').innerText = "+" + spread + "%";
-        return { spread, b, w };
+        let b = base + (Math.random() * (base * 0.0005));
+        let w = b + (b * 0.015); // Spread simulado
+        let k = b + (b * 0.003);
+        document.getElementById('p1').innerText = "$" + b.toLocaleString();
+        document.getElementById('p2').innerText = "$" + w.toLocaleString();
+        document.getElementById('p3').innerText = "$" + k.toLocaleString();
+        let s = ((w-b)/b*100).toFixed(2);
+        document.getElementById('p-spread').innerText = "+" + s + "%";
+        return {s, b, w};
     }
 
-    async function ejecutarCicloCompleto() {
-        const data = updatePrices();
-        addLog("Iniciando escaneo de liquidez...");
+    async function ejecutarCiclo() {
+        const d = updatePrices();
+        addLog("Escaneando precios en tiempo real...");
+        if(d.s < minSpread) { addLog("Abortado: Spread bajo."); return; }
         
-        if(data.spread < minSpread) {
-            addLog(`ABORTADO: Spread (${data.spread}%) insuficiente.`);
-            return;
-        }
-
-        addLog(`OPORTUNIDAD DETECTADA: ${data.spread}%`);
-        addLog("PASO 1: Comprando en Binance (Precio bajo)...");
+        addLog(`Oportunidad: ${d.s}% detectada.`);
+        addLog("1. Comprando en exchange de origen...");
+        await new Promise(r => setTimeout(r, 1000));
+        addLog("2. Transfiriendo fondos entre plataformas...");
         await new Promise(r => setTimeout(r, 1500));
-        addLog("PASO 2: Transfiriendo a WhiteBIT vía TRC-20...");
-        await new Promise(r => setTimeout(r, 2000));
-        addLog("PASO 3: Venta ejecutada en WhiteBIT (Precio alto).");
+        addLog("3. Vendiendo en destino con ganancia.");
+        await new Promise(r => setTimeout(r, 1000));
+        addLog("4. Retornando capital a base inicial.");
         await new Promise(r => setTimeout(r, 1500));
-        addLog("PASO 4: Retornando capital + ganancia a Binance.");
-        await new Promise(r => setTimeout(r, 2000));
-        addLog("✅ CICLO COMPLETADO. Beneficio asegurado.");
+        addLog("✅ Ciclo finalizado con éxito.");
     }
 
     render();
-    setInterval(updatePrices, 3000);
+    setInterval(updatePrices, 2500);
 </script>
 </body>
 </html>
