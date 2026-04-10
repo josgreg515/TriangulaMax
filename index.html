@@ -1,137 +1,133 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | José Gregorio</title>
+    <title>TRIANGULA-MAX | José Gregorio Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --oro: #d4af37; --cian: #00e5ff; --fondo: #0a0e14; --panel: rgba(16, 22, 30, 0.95); --borde: rgba(0, 229, 255, 0.2); --verde: #3fb950; --rojo: #ff4d4d; }
-        body { background: var(--fondo) radial-gradient(circle at top, #16222e 0%, #0a0e14 100%); color: white; font-family: 'Orbitron', sans-serif; margin: 0; display: flex; justify-content: center; padding: 10px; min-height: 100vh; }
-        .main-frame { width: 100%; max-width: 480px; background: var(--panel); border: 2px solid var(--borde); border-radius: 25px; padding: 20px; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(0,229,255,0.1); padding-bottom: 10px; }
-        .logo-img { height: 45px; filter: drop-shadow(0 0 8px var(--cian)); }
-        .lang-bar { display: flex; justify-content: flex-end; margin-bottom: 15px; }
-        .lang-select { background: #0d1117; color: var(--oro); border: 1px solid var(--borde); font-size: 0.65rem; padding: 6px; border-radius: 5px; cursor: pointer; }
-        .nav-tabs { display: flex; gap: 5px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; background: #1c2128; border: 1px solid var(--borde); color: #8b949e; padding: 12px 2px; font-family: 'Orbitron'; font-size: 0.55rem; cursor: pointer; border-radius: 8px; transition: 0.3s; }
-        .tab-btn.active { border-color: var(--oro); color: var(--oro); background: rgba(212, 175, 55, 0.1); }
-        .tab-admin { border-color: var(--rojo); color: var(--rojo); }
-        .sub-panel { display: none; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; min-height: 440px; border: 1px solid rgba(255,255,255,0.05); }
-        .sub-panel.active { display: block; animation: fadeIn 0.4s ease; }
-        .price-card { background: #05070a; border: 1px solid var(--borde); border-radius: 12px; padding: 15px; margin: 15px 0; font-family: 'Roboto Mono'; }
-        .price-line { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1a1a1a; }
-        .val-ex { font-size: 0.9rem; color: var(--cian); font-weight: bold; }
-        label { font-size: 0.6rem; color: var(--oro); display: block; margin-top: 15px; text-transform: uppercase; }
-        select, input { width: 100%; background: #0d1117; border: 1px solid #333; color: var(--cian); padding: 12px; margin-top: 6px; border-radius: 8px; font-family: 'Orbitron'; font-size: 0.7rem; box-sizing: border-box; }
-        .btn-exec { width: 100%; background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%); color: black; border: none; padding: 18px; margin-top: 20px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
-        .btn-sec { width: 100%; background: transparent; border: 1px solid var(--cian); color: var(--cian); padding: 10px; margin-top: 15px; border-radius: 8px; font-size: 0.6rem; cursor: pointer; text-transform: uppercase; }
-        .log-terminal { background: #000; border: 1px solid #222; height: 90px; overflow-y: auto; padding: 10px; font-family: 'Roboto Mono'; font-size: 0.6rem; color: var(--verde); border-radius: 8px; margin-top: 15px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        :root { --oro: #d4af37; --cian: #00e5ff; --fondo: #0a0e14; --panel: rgba(16, 22, 30, 0.98); --borde: #d4af37; --verde: #3fb950; --rojo: #ff4d4d; --gris: #8b949e; }
+        body { background: #000; color: white; font-family: 'Orbitron', sans-serif; margin: 0; display: flex; justify-content: center; padding: 10px; min-height: 100vh; overflow-x: hidden; }
+        .phone-frame { width: 100%; max-width: 420px; background: var(--panel); border: 2px solid #333; border-radius: 40px; padding: 20px; box-sizing: border-box; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.9); }
+        
+        /* HEADER Y LOGO */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .tm-logo { color: var(--oro); font-size: 2rem; font-weight: bold; border-right: 2px solid var(--oro); padding-right: 10px; }
+        .tm-text { font-size: 0.6rem; color: #fff; letter-spacing: 1px; }
+        
+        /* IDIOMAS */
+        .lang-group { text-align: right; }
+        .flags { font-size: 0.8rem; cursor: pointer; display: block; margin-bottom: 2px; }
+        .lang-label { font-size: 0.45rem; color: var(--gris); text-transform: uppercase; }
+
+        .user-tag { text-align: center; font-size: 0.65rem; color: var(--gris); margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+
+        /* NAVEGACIÓN PRINCIPAL */
+        .nav-main { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 15px; }
+        .nav-btn { background: #1c2128; border: 1px solid #333; color: var(--gris); padding: 8px 2px; font-size: 0.45rem; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
+        .nav-btn.active { border-color: var(--oro); color: var(--oro); }
+        .nav-btn.admin { border-color: var(--rojo); color: var(--rojo); font-weight: bold; }
+
+        /* CONTENIDO ARBITRAJE */
+        .section-title { color: var(--oro); text-align: center; font-size: 0.9rem; margin: 10px 0; border: 1px solid var(--oro); border-radius: 5px; padding: 5px; }
+        
+        /* MONITOR LIVE */
+        .monitor-box { border: 1px solid var(--cian); border-radius: 10px; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.4); }
+        .monitor-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .live-label { font-size: 0.7rem; color: #fff; }
+        .loss-tag { color: var(--rojo); font-size: 0.65rem; text-align: right; }
+        .chart-sim { height: 40px; width: 100%; border-bottom: 1px solid var(--cian); position: relative; overflow: hidden; margin-bottom: 10px; }
+        .chart-line { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.2) 50%, transparent 100%); animation: scan 2s infinite linear; }
+        
+        .price-display { font-family: 'Roboto Mono'; font-size: 0.8rem; }
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 4px; color: var(--gris); }
+        .price-val { color: #fff; font-weight: bold; }
+        .spread-row { border-top: 1px dashed #333; margin-top: 5px; padding-top: 5px; color: var(--oro); font-weight: bold; }
+
+        /* ESCANEO */
+        .scan-box { border: 1px solid var(--verde); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-size: 0.6rem; }
+        .scan-status { color: var(--verde); display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
+        .dot { width: 6px; height: 6px; background: var(--verde); border-radius: 50%; animation: blink 1s infinite; }
+
+        /* BITÁCORA */
+        .log-box { border: 1px solid #444; border-radius: 10px; padding: 10px; background: #05070a; font-family: 'Roboto Mono'; }
+        .log-title { font-size: 0.6rem; color: var(--gris); margin-bottom: 8px; border-bottom: 1px solid #222; }
+        .log-content { font-size: 0.55rem; height: 60px; overflow-y: auto; color: #aaa; }
+        .log-entry { margin-bottom: 4px; border-bottom: 1px solid #111; padding-bottom: 2px; }
+
+        /* BOTONES ACCIÓN */
+        .btn-security { width: 100%; background: rgba(0, 229, 255, 0.1); border: 1px solid var(--cian); color: var(--cian); padding: 10px; border-radius: 8px; margin-top: 15px; font-size: 0.6rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        @keyframes scan { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
-<div class="main-frame">
+
+<div class="phone-frame">
     <div class="header">
-        <img src="logo.png" alt="TM" class="logo-img">
-        <div style="text-align: right; font-size: 0.55rem; color: #8b949e;">ID: <b>JOSE_GREGORIO_MOD</b></div>
-    </div>
-
-    <div class="lang-bar">
-        <select class="lang-select" id="langSelect" onchange="translate()">
-            <option value="es">ESPAÑOL</option><option value="en">ENGLISH</option><option value="pt">PORTUGUÊS</option><option value="it">ITALIANO</option><option value="ru">РУССКИЙ</option><option value="ar">العربية</option>
-        </select>
-    </div>
-
-    <div class="nav-tabs">
-        <button class="tab-btn active" id="t1" onclick="showTab('arbitraje', this)">ARBITRAJE</button>
-        <button class="tab-btn" id="t2" onclick="showTab('llaves', this)">LLAVES API</button>
-        <button class="tab-btn tab-admin" id="t3" onclick="showTab('admin', this)">⚙️ PANEL ADMIN</button>
-    </div>
-
-    <div id="arbitraje" class="sub-panel active">
-        <h3 id="l1" style="font-size:0.8rem; color:var(--oro); margin:0;">MÓDULO DE OPERACIÓN</h3>
-        
-        <label id="l2">Estrategia:</label>
-        <select>
-            <option>Arbitraje Inter-Plataforma</option>
-            <option>Arbitraje Triangular</option>
-        </select>
-
-        <label id="l3">Activo de Valor (Estables/Baratos):</label>
-        <select id="asset-select">
-            <option value="USDT">USDT (Tether)</option>
-            <option value="SOL">Solana (SOL)</option>
-            <option value="LTC">Litecoin (LTC)</option>
-            <option value="MATIC">Polygon (MATIC)</option>
-        </select>
-
-        <div class="price-card">
-            <div class="price-line"><span id="l4">PRECIO COMPRA</span><span class="val-ex" id="buy-val">$1.000</span></div>
-            <div class="price-line"><span id="l5">PRECIO VENTA</span><span class="val-ex" style="color:var(--verde)" id="sell-val">$1.015</span></div>
-            <div class="price-line" style="border:none; margin-top:5px;"><span id="l6" style="color:var(--oro)">RENTABILIDAD</span><span class="val-ex" style="color:var(--verde)" id="spread-val">+1.50%</span></div>
+        <div class="logo-area">
+            <div class="tm-logo">TM</div>
+            <div class="tm-text">TRIANGULA-MAX</div>
         </div>
-
-        <button class="btn-exec" id="l7" onclick="ejecutar()">INICIAR CICLO MAESTRO</button>
-        <div class="log-terminal" id="log">> Sistema listo para el Administrador...</div>
-        <button class="btn-sec" id="l8" onclick="showSecurity()">ℹ️ INFORMACIÓN DE SEGURIDAD Y PRIVACIDAD</button>
+        <div class="lang-group">
+            <div class="flags">🇪🇸 🇬🇧 🇵🇹 🇮🇹 🇷🇺 🇦🇷</div>
+            <div class="lang-label" id="lang-label">Idiomas/Languages</div>
+        </div>
     </div>
 
-    <div id="admin" class="sub-panel">
-        <h3 style="color:var(--rojo); font-size:0.8rem;">PANEL DE CONTROL REAL</h3>
-        <label>Ajustar Precio Compra ($):</label>
-        <input type="number" id="in-buy" value="1.000" step="0.001">
-        <label>Ajustar Precio Venta ($):</label>
-        <input type="number" id="in-sell" value="1.015" step="0.001">
-        <button class="btn-exec" style="background:var(--verde)" onclick="saveAdmin()">GUARDAR Y APLICAR</button>
+    <div class="user-tag">José Gregorio Edition</div>
+
+    <div class="nav-main">
+        <button class="nav-btn active">Arbitraje</button>
+        <button class="nav-btn">Historial</button>
+        <button class="nav-btn">Llaves API</button>
+        <button class="nav-btn admin">⚙️ Administración</button>
     </div>
 
-    <div id="llaves" class="sub-panel"><h3>GESTIÓN API</h3><input type="password" placeholder="API Key"><input type="password" placeholder="Secret Key"></div>
+    <div class="section-title">ARBITRAJE</div>
+
+    <div class="monitor-box">
+        <div class="monitor-head">
+            <div class="live-label">Live Monitor<br><small style="font-size:0.4rem; color:var(--gris)">REAL-TIME NET PROFIT/LOSS %</small></div>
+            <div class="loss-tag">▼ -0.15%<br><small style="font-size:0.45rem">LIVE LOSS<br>USDT/SOL/MATIC</small></div>
+        </div>
+        <div class="chart-sim">
+            <div class="chart-line"></div>
+            <svg width="100%" height="40" viewBox="0 0 100 40" preserveAspectRatio="none">
+                <path d="M0 30 L20 25 L40 35 L60 15 L80 25 L100 20" stroke="var(--cian)" fill="none" stroke-width="1"/>
+            </svg>
+        </div>
+        <div class="price-display">
+            <div class="price-row"><span>PRECIO BINANCE:</span> <span class="price-val">$1.0000</span></div>
+            <div class="price-row"><span>PRECIO WHITEBIT:</span> <span class="price-val">$0.9985</span></div>
+            <div class="price-row spread-row"><span>SPREAD NETO:</span> <span style="color:var(--verde)">+1.502%</span></div>
+        </div>
+    </div>
+
+    <div class="scan-box">
+        <div style="color:var(--gris); margin-bottom:5px; font-size:0.5rem;">Operación Activa</div>
+        <div class="scan-status">
+            <div class="dot"></div> ESCANEO ACTIVO
+        </div>
+        <div style="color:var(--verde)">SCANNING USDT/SOL...</div>
+    </div>
+
+    <div class="log-box">
+        <div class="log-title">Bitácora de Transacciones (Sub-cuadro)</div>
+        <div class="log-content">
+            <div class="log-entry">TRANSACCIONES EFECTUADAS (ULT. 5 MIN)</div>
+            <div class="log-entry"><span style="color:var(--gris)">14:32:01 |</span> <span style="color:var(--verde)">COMPRA</span> | SOL/USDT | BNCE</div>
+            <div class="log-entry"><span style="color:var(--gris)">14:32:05 |</span> <span style="color:var(--rojo)">VENTA</span> | SOL/USDT | WHIT</div>
+            <div class="log-entry" style="color:var(--oro)">NETO: +$15.20</div>
+        </div>
+    </div>
+
+    <button class="btn-security">
+        <span style="font-size:1rem;">ℹ️</span> Información de Seguridad y Privacidad
+    </button>
 </div>
 
-<script>
-    const dict = {
-        es: {t1:"ARBITRAJE", t2:"API", t3:"ADMIN", l1:"MÓDULO DE OPERACIÓN", l2:"Estrategia:", l3:"Activo:", l4:"PRECIO COMPRA", l5:"PRECIO VENTA", l6:"RENTABILIDAD", l7:"INICIAR CICLO MAESTRO", l8:"ℹ️ SEGURIDAD Y PRIVACIDAD"},
-        en: {t1:"ARBITRAGE", t2:"API", t3:"ADMIN", l1:"OPERATION MODULE", l2:"Strategy:", l3:"Asset:", l4:"BUY PRICE", l5:"SELL PRICE", l6:"PROFITABILITY", l7:"START MASTER CYCLE", l8:"ℹ️ SECURITY & PRIVACY"}
-    };
-
-    function translate() {
-        const l = document.getElementById('langSelect').value;
-        const d = dict[l] || dict.en;
-        document.getElementById('t1').innerText = d.t1; document.getElementById('t2').innerText = d.t2; document.getElementById('t3').innerText = d.t3;
-        document.getElementById('l1').innerText = d.l1; document.getElementById('l2').innerText = d.l2; document.getElementById('l3').innerText = d.l3;
-        document.getElementById('l4').innerText = d.l4; document.getElementById('l5').innerText = d.l5; document.getElementById('l6').innerText = d.l6;
-        document.getElementById('l7').innerText = d.l7; document.getElementById('l8').innerText = d.l8;
-    }
-
-    function saveAdmin() {
-        const b = document.getElementById('in-buy').value;
-        const s = document.getElementById('in-sell').value;
-        document.getElementById('buy-val').innerText = "$" + b;
-        document.getElementById('sell-val').innerText = "$" + s;
-        const spread = ((s - b) / b * 100).toFixed(2);
-        document.getElementById('spread-val').innerText = "+" + spread + "%";
-        alert("Configuración aplicada a la pantalla principal");
-        showTab('arbitraje', document.getElementById('t1'));
-    }
-
-    function showSecurity() {
-        alert("🛡️ PROTOCOLO DE SEGURIDAD JOSÉ GREGORIO:\n1. Encriptación de llaves API end-to-end.\n2. Verificación de redes baratas (SOL, MATIC, LTC).\n3. Bloqueo de retiro a direcciones no firmadas.\n4. Privacidad absoluta de datos de usuario.");
-    }
-
-    function showTab(id, btn) {
-        document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    function ejecutar() {
-        const log = document.getElementById('log');
-        log.innerHTML = "> Iniciando ciclo con moneda estable...";
-        setTimeout(()=> { log.innerHTML += "<br>> Verificando liquidez en red barata..."; }, 1000);
-        setTimeout(()=> { log.innerHTML += "<br>> <span style='color:var(--oro)'>✅ Ciclo completado con éxito.</span>"; }, 2500);
-    }
-</script>
 </body>
 </html>
