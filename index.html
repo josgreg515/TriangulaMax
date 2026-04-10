@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | Final Build</title>
+    <title>TRIANGULA-MAX-BOT | Master Suite</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,31 +24,39 @@
             box-shadow: 0 0 40px rgba(0,0,0,0.7); box-sizing: border-box;
         }
 
+        /* HEADER */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(0,229,255,0.1); padding-bottom: 10px; }
-        .logo-img { height: 45px; filter: drop-shadow(0 0 5px var(--cian)); }
+        .logo-img { height: 40px; filter: drop-shadow(0 0 5px var(--cian)); }
 
-        .nav-tabs { display: flex; gap: 4px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; background: #1c2128; border: 1px solid var(--borde); color: #8b949e; padding: 10px 2px; font-family: 'Orbitron'; font-size: 0.5rem; cursor: pointer; border-radius: 6px; transition: 0.3s; }
+        /* IDIOMAS */
+        .lang-bar { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .lang-select { background: #0d1117; color: var(--oro); border: 1px solid var(--borde); font-size: 0.6rem; padding: 5px; border-radius: 4px; cursor: pointer; }
+
+        /* NAVEGACIÓN */
+        .nav-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; background: #1c2128; border: 1px solid var(--borde); color: #8b949e; padding: 10px 2px; font-family: 'Orbitron'; font-size: 0.5rem; cursor: pointer; border-radius: 6px; }
         .tab-btn.active { border-color: var(--oro); color: var(--oro); background: rgba(212, 175, 55, 0.1); }
         .tab-admin { border-color: var(--rojo); color: var(--rojo); }
 
-        /* CONTENEDORES DINÁMICOS */
-        .sub-panel { display: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-bottom: 15px; min-height: 350px; }
+        /* PANELES */
+        .sub-panel { display: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-bottom: 15px; min-height: 380px; }
         .sub-panel.active { display: block; animation: fadeIn 0.3s ease; }
 
-        /* PRECIOS EN CAJA ÚNICA */
+        /* PRECIOS */
         .price-terminal { background: #05070a; border: 1px solid var(--borde); border-radius: 8px; padding: 15px; margin: 15px 0; font-family: 'Roboto Mono'; }
         .price-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
         .label-ex { font-size: 0.65rem; color: #8b949e; }
         .val-ex { font-size: 0.85rem; color: var(--cian); font-weight: bold; }
 
         /* FORMULARIOS */
-        .admin-section { border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 10px; }
-        label { font-size: 0.55rem; color: var(--oro); display: block; margin-bottom: 5px; }
-        select, input { width: 100%; background: #0d1117; border: 1px solid #333; color: white; padding: 10px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.65rem; box-sizing: border-box; margin-bottom: 10px; }
-
-        .btn-exec { width: 100%; background: #1a1a1a; border: 1px solid var(--oro); color: var(--oro); padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        label { font-size: 0.55rem; color: var(--oro); display: block; margin-top: 10px; text-transform: uppercase; }
+        select, input { width: 100%; background: #0d1117; border: 1px solid #333; color: var(--cian); padding: 10px; margin-top: 5px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.65rem; box-sizing: border-box; }
         
+        .api-group { margin-top: 15px; border-top: 1px solid #222; padding-top: 10px; }
+        .api-group h4 { font-size: 0.6rem; color: var(--oro); margin: 0 0 5px 0; }
+
+        .btn-exec { width: 100%; background: #1a1a1a; border: 1px solid var(--oro); color: var(--oro); padding: 15px; margin-top: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
@@ -56,20 +64,31 @@
 
 <div class="main-frame">
     <div class="header">
-        <div style="color:var(--cian); font-weight:bold; font-size:1.2rem;">TRIANGULA-MAX</div>
+        <div style="color:var(--cian); font-weight:bold; font-size:1.1rem;">TRIANGULA-MAX</div>
         <div style="text-align: right; font-size: 0.5rem; color: #8b949e;">ADMIN: <b>JOSÉ GREGORIO</b></div>
     </div>
 
+    <div class="lang-bar">
+        <select class="lang-select" id="lang-switcher" onchange="cambiarIdioma()">
+            <option value="es">ESPAÑOL</option>
+            <option value="en">ENGLISH</option>
+            <option value="pt">PORTUGUÊS</option>
+            <option value="it">ITALIANO</option>
+            <option value="ru">РУССКИЙ</option>
+            <option value="ar">العربية</option>
+        </select>
+    </div>
+
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="showTab('arbitraje', this)">ARBITRAJE</button>
-        <button class="tab-btn" onclick="showTab('historial', this)">HISTORIAL</button>
-        <button class="tab-btn" onclick="showTab('llaves', this)">LLAVES API</button>
+        <button class="tab-btn active" id="tab-arb" onclick="showTab('arbitraje', this)">ARBITRAJE</button>
+        <button class="tab-btn" id="tab-his" onclick="showTab('historial', this)">HISTORIAL</button>
+        <button class="tab-btn" id="tab-api" onclick="showTab('llaves', this)">LLAVES API</button>
         <button class="tab-btn tab-admin" onclick="showTab('admin', this)">⚙️ PANEL</button>
     </div>
 
     <div id="arbitraje" class="sub-panel active">
-        <h3 style="font-size:0.7rem; color:var(--oro); margin:0 0 10px 0;">MERCADO EN VIVO</h3>
-        <label>SELECCIONAR PAR ACTIVO:</label>
+        <h3 id="txt-mando" style="font-size:0.75rem; color:var(--oro); margin:0;">CENTRO DE MANDO</h3>
+        <label id="lbl-par">Activo Seleccionado:</label>
         <select id="pair-selector" onchange="updatePrices()"></select>
 
         <div class="price-terminal">
@@ -77,89 +96,98 @@
             <div class="price-line"><span class="label-ex">WHITEBIT</span><span id="p2" class="val-ex">$0.00</span></div>
             <div class="price-line"><span class="label-ex">KUCOIN</span><span id="p3" class="val-ex">$0.00</span></div>
             <div class="price-line" style="border:none; margin-top:10px; padding-top:10px; border-top:1px dashed #333">
-                <span class="label-ex" style="color:var(--oro)">NET SPREAD</span>
+                <span id="lbl-spread" class="label-ex" style="color:var(--oro)">LIVE SPREAD</span>
                 <span id="p-spread" class="val-ex" style="color:var(--verde)">0.00%</span>
             </div>
         </div>
-        <button class="btn-exec" onclick="alert('Iniciando...')">EJECUTAR ARBITRAJE</button>
+        <button class="btn-exec" id="btn-exec" onclick="alert('Iniciando...')">EJECUTAR ARBITRAJE</button>
     </div>
 
     <div id="historial" class="sub-panel">
-        <h3 style="font-size:0.7rem; color:var(--oro); margin:0 0 20px 0;">ESTADÍSTICAS</h3>
-        <div style="background:#05070a; padding:20px; border-radius:10px; text-align:center; border:1px solid #222;">
-            <p style="font-size:0.5rem; color:#8b949e; margin:0;">TOTAL PROFIT</p>
-            <h2 style="color:var(--verde); margin:10px 0;">$14,520.30</h2>
-            <p style="font-size:0.4rem; color:#444;">ÚLTIMOS 30 DÍAS</p>
-        </div>
+        <h3 id="txt-stats" style="font-size:0.75rem; color:var(--oro); margin:0;">ESTADÍSTICAS</h3>
+        <div style="font-size: 2rem; color: var(--oro); text-align:center; margin: 40px 0;">$250,000</div>
+        <p style="text-align:center; font-size:0.6rem; color:var(--verde);">TRADED VOLUME (USDT)</p>
     </div>
 
     <div id="llaves" class="sub-panel">
-        <h3 style="font-size:0.7rem; color:var(--oro); margin:0 0 15px 0;">LLAVES API</h3>
-        <label>BINANCE KEY</label><input type="password" placeholder="••••••••••••">
-        <label>WHITEBIT KEY</label><input type="password" placeholder="••••••••••••">
-        <label>KUCOIN KEY</label><input type="password" placeholder="••••••••••••">
+        <h3 id="txt-keys" style="font-size:0.75rem; color:var(--oro); margin:0;">LLAVES API</h3>
+        <div class="api-group"><h4>Binance</h4><input type="password" placeholder="API Key"><input type="password" placeholder="Secret Key"></div>
+        <div class="api-group"><h4>WhiteBIT</h4><input type="password" placeholder="API Key"><input type="password" placeholder="Secret Key"></div>
+        <div class="api-group"><h4>KuCoin</h4><input type="password" placeholder="API Key"><input type="password" placeholder="Pass"></div>
     </div>
 
     <div id="admin" class="sub-panel">
-        <h3 style="font-size:0.7rem; color:var(--rojo); margin:0 0 15px 0;">GESTOR DE ACTIVOS</h3>
-        <div class="admin-section">
-            <label>PAR 1:</label>
-            <input type="text" id="name1" value="BTC / USDT" style="width:60%">
-            <input type="number" id="val1" value="65000" style="width:35%">
+        <h3 style="font-size:0.75rem; color:var(--rojo); margin:0;">GESTOR DE ACTIVOS</h3>
+        <div style="margin-top:15px;">
+            <label>PAR 1: Nombre / Precio</label>
+            <div style="display:flex; gap:5px;"><input type="text" id="n1" value="BTC/USDT"><input type="number" id="v1" value="65000"></div>
+            <label>PAR 2: Nombre / Precio</label>
+            <div style="display:flex; gap:5px;"><input type="text" id="n2" value="ETH/USDT"><input type="number" id="v2" value="3500"></div>
+            <label>PAR 3: Nombre / Precio</label>
+            <div style="display:flex; gap:5px;"><input type="text" id="n3" value="SOL/USDT"><input type="number" id="v3" value="150"></div>
         </div>
-        <div class="admin-section">
-            <label>PAR 2:</label>
-            <input type="text" id="name2" value="ETH / USDT" style="width:60%">
-            <input type="number" id="val2" value="3500" style="width:35%">
-        </div>
-        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR CAMBIOS</button>
+        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR Y ACTIVAR</button>
     </div>
 
 </div>
 
 <script>
-    let config = [
-        { nombre: "BTC / USDT", precio: 65000 },
-        { nombre: "ETH / USDT", precio: 3500 }
+    const traducciones = {
+        es: { mando: "Centro de Mando", exec: "EJECUTAR ARBITRAJE", keys: "Llaves API", stats: "Estadísticas" },
+        en: { mando: "Command Center", exec: "EXECUTE ARBITRAGE", keys: "API Keys", stats: "Statistics" },
+        pt: { mando: "Centro de Comando", exec: "EXECUTAR ARBITRAGEM", keys: "Chaves API", stats: "Estatísticas" },
+        it: { mando: "Centro di Comando", exec: "ESEGUI ARBITRAGGIO", keys: "Chiavi API", stats: "Statistiche" },
+        ru: { mando: "Центр управления", exec: "ЗАПУСТИТЬ", keys: "Ключи API", stats: "Статистика" },
+        ar: { mando: "مركز القيادة", exec: "تنفيذ المراجحة", keys: "مفاتيح API", stats: "إحصائيات" }
+    };
+
+    let activos = [
+        { n: "BTC/USDT", v: 65000 },
+        { n: "ETH/USDT", v: 3500 },
+        { n: "SOL/USDT", v: 150 }
     ];
 
     function showTab(id, btn) {
-        // Ocultar todos los paneles
         document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
-        // Quitar estado activo de todos los botones
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        
-        // Mostrar el seleccionado
         document.getElementById(id).classList.add('active');
         btn.classList.add('active');
     }
 
-    function saveAdmin() {
-        config[0].nombre = document.getElementById('name1').value;
-        config[0].precio = parseFloat(document.getElementById('val1').value);
-        config[1].nombre = document.getElementById('name2').value;
-        config[1].precio = parseFloat(document.getElementById('val2').value);
-        render();
-        alert("¡Configuración guardada!");
+    function cambiarIdioma() {
+        const l = document.getElementById('lang-switcher').value;
+        const t = traducciones[l];
+        document.getElementById('txt-mando').innerText = t.mando;
+        document.getElementById('btn-exec').innerText = t.exec;
+        document.getElementById('txt-keys').innerText = t.keys;
+        document.getElementById('txt-stats').innerText = t.stats;
     }
 
-    function render() {
+    function saveAdmin() {
+        activos[0].n = document.getElementById('n1').value; activos[0].v = parseFloat(document.getElementById('v1').value);
+        activos[1].n = document.getElementById('n2').value; activos[1].v = parseFloat(document.getElementById('v2').value);
+        activos[2].n = document.getElementById('n3').value; activos[2].v = parseFloat(document.getElementById('v3').value);
+        renderActivos();
+        alert("Configuración aplicada correctamente.");
+    }
+
+    function renderActivos() {
         const sel = document.getElementById('pair-selector');
-        sel.innerHTML = config.map((c, i) => `<option value="${i}">${c.nombre}</option>`).join('');
+        sel.innerHTML = activos.map((a, i) => `<option value="${i}">${a.n}</option>`).join('');
     }
 
     function updatePrices() {
         const idx = document.getElementById('pair-selector').value;
-        if(!config[idx]) return;
-        const base = config[idx].precio;
+        if(!activos[idx]) return;
+        const base = activos[idx].v;
         let b = base + (Math.random() * (base * 0.002));
         document.getElementById('p1').innerText = "$" + b.toLocaleString();
-        document.getElementById('p2').innerText = "$" + (b + (base * 0.009)).toLocaleString();
-        document.getElementById('p3').innerText = "$" + (b - (base * 0.001)).toLocaleString();
-        document.getElementById('p-spread').innerText = "+" + (0.90 + Math.random()*0.5).toFixed(2) + "%";
+        document.getElementById('p2').innerText = "$" + (b + (base * 0.012)).toLocaleString();
+        document.getElementById('p3').innerText = "$" + (b - (base * 0.003)).toLocaleString();
+        document.getElementById('p-spread').innerText = "+" + (1.10 + Math.random()*0.5).toFixed(2) + "%";
     }
 
-    render();
+    renderActivos();
     setInterval(updatePrices, 2000);
 </script>
 </body>
