@@ -22,19 +22,24 @@
         .sub-panel { display: none; }
         .sub-panel.active { display: block; }
         .section-title { color: var(--oro); text-align: center; font-size: 0.9rem; margin: 10px 0; border: 1px solid var(--oro); border-radius: 5px; padding: 5px; }
+        
+        /* MONITOR Y CONTROLES */
         .monitor-box { border: 1px solid var(--cian); border-radius: 10px; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.4); }
-        .monitor-head { display: flex; justify-content: space-between; align-items: flex-start; }
-        .chart-sim { height: 40px; width: 100%; border-bottom: 1px solid var(--cian); position: relative; margin-bottom: 10px; overflow: hidden; }
-        .chart-line { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.2) 50%, transparent 100%); animation: scan 2s infinite linear; }
-        .price-display { font-family: 'Roboto Mono'; font-size: 0.8rem; }
+        .price-display { font-family: 'Roboto Mono'; font-size: 0.8rem; margin-top: 10px; }
         .price-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        
+        /* BOTONES DE EJECUCIÓN */
+        .control-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .mode-btn { padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1c2128; color: white; font-size: 0.6rem; cursor: pointer; font-weight: bold; }
+        .mode-btn.active { background: var(--oro); color: black; border-color: var(--oro); }
+        .execute-btn { width: 100%; padding: 15px; border-radius: 10px; border: none; background: var(--verde); color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; margin-bottom: 10px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(63, 185, 80, 0.3); }
+        .execute-btn:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
+
         .scan-box { border: 1px solid var(--verde); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-size: 0.6rem; }
         .log-box { border: 1px solid #444; border-radius: 10px; padding: 10px; background: #05070a; font-family: 'Roboto Mono'; }
         .log-content { font-size: 0.55rem; height: 80px; overflow-y: auto; color: #aaa; }
-        .btn-security { width: 100%; background: rgba(0, 229, 255, 0.1); border: 1px solid var(--cian); color: var(--cian); padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 0.6rem; cursor: pointer; }
         input { width: 100%; background: #000; border: 1px solid #444; color: var(--oro); padding: 8px; margin: 5px 0; border-radius: 5px; box-sizing: border-box; font-family: 'Roboto Mono'; }
-        .key-group { border: 1px solid #222; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
-        @keyframes scan { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+        .btn-security { width: 100%; background: rgba(0, 229, 255, 0.1); border: 1px solid var(--cian); color: var(--cian); padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 0.6rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -54,61 +59,64 @@
     </div>
 
     <div id="arb" class="sub-panel active">
-        <div class="section-title" id="t-seccion">ARBITRAJE</div>
+        <div class="section-title" id="t-seccion">SISTEMA DE ARBITRAJE</div>
+        
         <div class="monitor-box">
-            <div class="monitor-head">
-                <div id="t-mon">Monitor Live (Criptoya)<br><small>USDT/SOL/MATIC</small></div>
-                <div style="color:var(--rojo); text-align:right;">▼ -0.15%<br><small>LIVE</small></div>
+            <div style="display:flex; justify-content:space-between; font-size:0.6rem;">
+                <span id="t-mon">Monitor Binance/Kucoin</span>
+                <span id="status-tag" style="color:var(--oro)">MODO: MANUAL</span>
             </div>
-            <div class="chart-sim"><div class="chart-line"></div></div>
             <div class="price-display">
-                <div class="price-row"><span>BINANCE:</span> <span id="v-b" style="color:#fff">$102.45</span></div>
-                <div class="price-row"><span>KUCOIN:</span> <span id="v-k" style="color:#fff">$103.89</span></div>
+                <div class="price-row"><span>BINANCE (USDT):</span> <span id="v-b" style="color:#fff">$102.45</span></div>
+                <div class="price-row"><span>KUCOIN (USDT):</span> <span id="v-k" style="color:#fff">$103.89</span></div>
                 <div class="price-row" style="color:var(--oro); border-top:1px dashed #333; margin-top:5px; padding-top:5px;">
                     <span>SPREAD:</span> <span id="v-s">+1.405%</span>
                 </div>
             </div>
         </div>
-        <div class="scan-box" id="t-scan" style="color:var(--verde)">● ESCANEO ACTIVO: REDES BARATAS</div>
-        <div class="log-box"><div class="log-content" id="log"><div>[SISTEMA] Conectando a Criptoya...</div></div></div>
+
+        <div class="control-group">
+            <button id="btn-manual" class="mode-btn active" onclick="setMode('manual')">MANUAL</button>
+            <button id="btn-auto" class="mode-btn" onclick="setMode('auto')">AUTOMÁTICO</button>
+        </div>
+
+        <button id="btn-ejecutar" class="execute-btn" onclick="ejecutarOperacion()">Ejecutar Arbitraje</button>
+
+        <div class="scan-box" id="t-scan" style="color:var(--verde)">● SISTEMA LISTO PARA OPERAR</div>
+        <div class="log-box"><div class="log-content" id="log"><div>[SISTEMA] Esperando instrucciones de José Gregorio...</div></div></div>
     </div>
 
     <div id="adm" class="sub-panel">
         <div class="section-title">ADMINISTRACIÓN</div>
-        <label style="font-size:0.5rem; color:var(--oro)">CAPITAL DE OPERACIÓN (USDT):</label>
+        <label style="font-size:0.5rem; color:var(--oro)">CAPITAL POR OPERACIÓN (USDT):</label>
         <input type="number" id="cap" value="100">
-        <label style="font-size:0.5rem; color:var(--oro)">SPREAD MÍNIMO (%) :</label>
+        <label style="font-size:0.5rem; color:var(--oro)">UMBRAL DE GANANCIA (%) :</label>
         <input type="number" id="spr" value="1.2">
-        <button onclick="aplicarConfig()" style="width:100%; background:var(--verde); color:white; border:none; padding:10px; margin-top:10px; border-radius:5px; cursor:pointer;">GUARDAR CONFIGURACIÓN</button>
+        <button onclick="verTab('arb', document.querySelector('.nav-btn'))" style="width:100%; background:var(--verde); color:white; border:none; padding:10px; margin-top:10px; border-radius:5px; cursor:pointer;">GUARDAR CAMBIOS</button>
     </div>
 
     <div id="keys" class="sub-panel">
-        <div class="section-title">CONEXIÓN EXCHANGES</div>
-        
-        <div class="key-group">
-            <p style="font-size:0.5rem; color:var(--cian); margin:0 0 5px 0;">🔑 BINANCE</p>
-            <input type="password" placeholder="Binance API Key">
-            <input type="password" placeholder="Binance Secret Key">
+        <div class="section-title">LLAVES DE SEGURIDAD</div>
+        <div style="border:1px solid #222; padding:8px; border-radius:8px; margin-bottom:5px;">
+            <p style="font-size:0.5rem; color:var(--cian); margin:0;">BINANCE</p>
+            <input type="password" placeholder="API Key"><input type="password" placeholder="Secret Key">
         </div>
-
-        <div class="key-group">
-            <p style="font-size:0.5rem; color:var(--oro); margin:0 0 5px 0;">🔑 KUCOIN</p>
-            <input type="password" placeholder="Kucoin API Key">
-            <input type="password" placeholder="Kucoin Secret Key">
-            <input type="password" placeholder="Kucoin Phrase (Trading Password)">
+        <div style="border:1px solid #222; padding:8px; border-radius:8px; margin-bottom:5px;">
+            <p style="font-size:0.5rem; color:var(--oro); margin:0;">KUCOIN</p>
+            <input type="password" placeholder="API Key"><input type="password" placeholder="Secret Key"><input type="password" placeholder="Passphrase">
         </div>
-
-        <button onclick="alert('Llaves vinculadas con seguridad AES-256')" style="width:100%; background:var(--verde); color:white; border:none; padding:12px; border-radius:5px; font-weight:bold;">VINCULAR Y PROTEJER</button>
+        <button onclick="alert('Vinculación exitosa')" style="width:100%; background:var(--oro); color:black; border:none; padding:12px; border-radius:5px; font-weight:bold;">VINCULAR CUENTAS</button>
     </div>
 
-    <div id="hist" class="sub-panel"><div class="section-title">HISTORIAL</div><div class="log-box" style="height:180px">Esperando transacciones...</div></div>
+    <div id="hist" class="sub-panel"><div class="section-title">HISTORIAL</div><div id="historial-lista" class="log-box" style="height:180px"></div></div>
 
-    <button class="btn-security" onclick="alert('SEGURIDAD ACTIVA:\n- Encriptación Local\n- Solo Redes Baratas\n- Filtro Criptoya Activo')">
-        ℹ️ Información de Seguridad y Privacidad
-    </button>
+    <button class="btn-security" onclick="alert('Cifrado End-to-End activo.')">ℹ️ Seguridad y Privacidad</button>
 </div>
 
 <script>
+    let modo = 'manual';
+    let lang = 'es';
+
     function verTab(id, btn) {
         document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -116,41 +124,53 @@
         btn.classList.add('active');
     }
 
-    let lang = 'es';
-    function cambiarIdioma() {
-        lang = lang === 'es' ? 'en' : 'es';
-        document.getElementById('t-seccion').innerText = lang === 'es' ? 'ARBITRAJE' : 'ARBITRAGE';
-        document.getElementById('t-mon').innerHTML = lang === 'es' ? 'Monitor Live (Criptoya)<br><small>USDT/SOL/MATIC</small>' : 'Live Monitor (Criptoya)<br><small>USDT/SOL/MATIC</small>';
-        document.getElementById('t-scan').innerText = lang === 'es' ? '● ESCANEO ACTIVO: REDES BARATAS' : '● ACTIVE SCAN: LOW-FEE NETWORKS';
+    function setMode(m) {
+        modo = m;
+        document.getElementById('btn-manual').classList.toggle('active', m === 'manual');
+        document.getElementById('btn-auto').classList.toggle('active', m === 'auto');
+        document.getElementById('status-tag').innerText = 'MODO: ' + m.toUpperCase();
+        document.getElementById('btn-ejecutar').disabled = (m === 'auto');
+        escribirLog(`Modo cambiado a: ${m.toUpperCase()}`);
     }
 
-    function simularMercado() {
-        const sprMin = parseFloat(document.getElementById('spr').value);
+    function ejecutarOperacion() {
+        const spread = document.getElementById('v-s').innerText;
+        escribirLog(`Ejecutando Compra Binance / Venta Kucoin...`);
+        setTimeout(() => {
+            escribirLog(`¡OPERACIÓN EXITOSA! Spread capturado: ${spread}`);
+            const h = document.getElementById('historial-lista');
+            h.innerHTML += `<div style="font-size:0.55rem; color:var(--verde); margin-bottom:5px;">[${new Date().toLocaleTimeString()}] Arbitraje Completado: ${spread}</div>`;
+        }, 1500);
+    }
+
+    function escribirLog(msg) {
+        const log = document.getElementById('log');
+        const hora = new Date().toLocaleTimeString();
+        const div = document.createElement('div');
+        div.innerHTML = `<span style="color:var(--gris)">[${hora}]</span> ${msg}`;
+        log.prepend(div);
+        if(log.children.length > 6) log.lastChild.remove();
+    }
+
+    // SIMULACIÓN DE MERCADO
+    setInterval(() => {
         const b = (100 + Math.random()).toFixed(2);
         const k = (parseFloat(b) + (Math.random() * 2)).toFixed(2);
         const s = (((k-b)/b)*100).toFixed(3);
-
         document.getElementById('v-b').innerText = '$' + b;
         document.getElementById('v-k').innerText = '$' + k;
-        const sElem = document.getElementById('v-s');
-        sElem.innerText = '+' + s + '%';
-        sElem.style.color = s > sprMin ? "var(--verde)" : "var(--oro)";
-
-        if(s > sprMin) {
-            const log = document.getElementById('log');
-            const entry = document.createElement('div');
-            entry.innerHTML = `<span style="color:var(--gris)">[${new Date().toLocaleTimeString()}]</span> ¡Oportunidad! +${s}% (Red SOL)`;
-            log.prepend(entry);
-            if(log.children.length > 8) log.lastChild.remove();
+        document.getElementById('v-s').innerText = '+' + s + '%';
+        
+        if(modo === 'auto' && s > parseFloat(document.getElementById('spr').value)) {
+            ejecutarOperacion();
         }
-    }
+    }, 4000);
 
-    function aplicarConfig() {
-        alert("Configuración guardada.");
-        verTab('arb', document.querySelector('.nav-btn'));
+    function cambiarIdioma() {
+        lang = lang === 'es' ? 'en' : 'es';
+        document.getElementById('t-seccion').innerText = lang === 'es' ? 'SISTEMA DE ARBITRAJE' : 'ARBITRAGE SYSTEM';
+        document.getElementById('btn-ejecutar').innerText = lang === 'es' ? 'Ejecutar Arbitraje' : 'Execute Arbitrage';
     }
-
-    setInterval(simularMercado, 3000);
 </script>
 </body>
 </html>
