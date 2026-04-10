@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX | Admin Suite</title>
+    <title>TRIANGULA-MAX | Final Build</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,38 +21,34 @@
         .main-frame {
             width: 100%; max-width: 480px; background: var(--panel);
             border: 2px solid var(--borde); border-radius: 25px; padding: 20px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.7); box-sizing: border-box; position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.7); box-sizing: border-box;
         }
 
-        /* HEADER & LANG */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(0,229,255,0.1); padding-bottom: 10px; }
         .logo-img { height: 45px; filter: drop-shadow(0 0 5px var(--cian)); }
-        .lang-select { background: #0d1117; color: var(--oro); border: 1px solid var(--borde); font-size: 0.6rem; padding: 5px; border-radius: 4px; }
 
-        /* TABS */
-        .nav-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { flex: 1; background: #1c2128; border: 1px solid var(--borde); color: #8b949e; padding: 8px 2px; font-family: 'Orbitron'; font-size: 0.5rem; cursor: pointer; border-radius: 6px; }
+        .nav-tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; background: #1c2128; border: 1px solid var(--borde); color: #8b949e; padding: 10px 2px; font-family: 'Orbitron'; font-size: 0.5rem; cursor: pointer; border-radius: 6px; transition: 0.3s; }
         .tab-btn.active { border-color: var(--oro); color: var(--oro); background: rgba(212, 175, 55, 0.1); }
         .tab-admin { border-color: var(--rojo); color: var(--rojo); }
 
-        /* PANELS */
-        .sub-panel { display: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-bottom: 15px; min-height: 320px; }
+        /* CONTENEDORES DINÁMICOS */
+        .sub-panel { display: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-bottom: 15px; min-height: 350px; }
         .sub-panel.active { display: block; animation: fadeIn 0.3s ease; }
 
-        /* PRICE BOX */
+        /* PRECIOS EN CAJA ÚNICA */
         .price-terminal { background: #05070a; border: 1px solid var(--borde); border-radius: 8px; padding: 15px; margin: 15px 0; font-family: 'Roboto Mono'; }
-        .price-line { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .label-ex { font-size: 0.6rem; color: #8b949e; }
-        .val-ex { font-size: 0.8rem; color: var(--cian); font-weight: bold; }
+        .price-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .label-ex { font-size: 0.65rem; color: #8b949e; }
+        .val-ex { font-size: 0.85rem; color: var(--cian); font-weight: bold; }
 
-        /* ADMIN FORM */
-        .admin-form label { font-size: 0.55rem; color: var(--oro); display: block; margin-top: 10px; }
-        .admin-input { width: 100%; background: #0d1117; border: 1px solid #333; color: white; padding: 8px; border-radius: 5px; font-family: 'Roboto Mono'; font-size: 0.7rem; margin-top: 4px; }
+        /* FORMULARIOS */
+        .admin-section { border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 10px; }
+        label { font-size: 0.55rem; color: var(--oro); display: block; margin-bottom: 5px; }
+        select, input { width: 100%; background: #0d1117; border: 1px solid #333; color: white; padding: 10px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.65rem; box-sizing: border-box; margin-bottom: 10px; }
 
-        /* BUTTONS */
-        .btn-exec { width: 100%; background: #1a1a1a; border: 1px solid var(--oro); color: var(--oro); padding: 14px; margin-top: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
-        .btn-save { border-color: var(--verde); color: var(--verde); margin-top: 20px; }
-
+        .btn-exec { width: 100%; background: #1a1a1a; border: 1px solid var(--oro); color: var(--oro); padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
@@ -60,11 +56,8 @@
 
 <div class="main-frame">
     <div class="header">
-        <img src="logo.png" alt="TM" class="logo-img">
-        <select class="lang-select" id="lang-switcher">
-            <option value="es">ESPAÑOL</option>
-            <option value="en">ENGLISH</option>
-        </select>
+        <div style="color:var(--cian); font-weight:bold; font-size:1.2rem;">TRIANGULA-MAX</div>
+        <div style="text-align: right; font-size: 0.5rem; color: #8b949e;">ADMIN: <b>JOSÉ GREGORIO</b></div>
     </div>
 
     <div class="nav-tabs">
@@ -75,11 +68,9 @@
     </div>
 
     <div id="arbitraje" class="sub-panel active">
-        <h3 style="font-size:0.7rem; color:var(--oro); margin:0;">OPORTUNIDADES DE MERCADO</h3>
-        
-        <label style="font-size: 0.5rem; color: #8b949e; margin-top:10px; display:block;">SELECCIONAR PAR:</label>
-        <select id="pair-selector" onchange="updatePrices()">
-            </select>
+        <h3 style="font-size:0.7rem; color:var(--oro); margin:0 0 10px 0;">MERCADO EN VIVO</h3>
+        <label>SELECCIONAR PAR ACTIVO:</label>
+        <select id="pair-selector" onchange="updatePrices()"></select>
 
         <div class="price-terminal">
             <div class="price-line"><span class="label-ex">BINANCE</span><span id="p1" class="val-ex">$0.00</span></div>
@@ -93,102 +84,83 @@
         <button class="btn-exec" onclick="alert('Iniciando...')">EJECUTAR ARBITRAJE</button>
     </div>
 
-    <div id="admin" class="sub-panel">
-        <h3 style="font-size:0.7rem; color:var(--rojo); margin:0;">CONFIGURACIÓN CRIPTOS</h3>
-        <p style="font-size:0.5rem; color:#8b949e;">Cambia los pares disponibles sin usar código:</p>
-        
-        <div class="admin-form">
-            <div style="border-bottom:1px solid #222; padding-bottom:10px;">
-                <label>PAR 1 (Nombre y Precio Base):</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="name1" class="admin-input" value="BTC / USDT">
-                    <input type="number" id="val1" class="admin-input" value="65000">
-                </div>
-            </div>
-
-            <div style="border-bottom:1px solid #222; padding-bottom:10px;">
-                <label>PAR 2 (Nombre y Precio Base):</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="name2" class="admin-input" value="ETH / USDT">
-                    <input type="number" id="val2" class="admin-input" value="3500">
-                </div>
-            </div>
-
-            <div>
-                <label>PAR 3 (Oportunidad Nueva):</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="name3" class="admin-input" value="SOL / USDT">
-                    <input type="number" id="val3" class="admin-input" value="145">
-                </div>
-            </div>
-
-            <button class="btn-exec btn-save" onclick="saveAdminChanges()">APLICAR CAMBIOS EN VIVO</button>
+    <div id="historial" class="sub-panel">
+        <h3 style="font-size:0.7rem; color:var(--oro); margin:0 0 20px 0;">ESTADÍSTICAS</h3>
+        <div style="background:#05070a; padding:20px; border-radius:10px; text-align:center; border:1px solid #222;">
+            <p style="font-size:0.5rem; color:#8b949e; margin:0;">TOTAL PROFIT</p>
+            <h2 style="color:var(--verde); margin:10px 0;">$14,520.30</h2>
+            <p style="font-size:0.4rem; color:#444;">ÚLTIMOS 30 DÍAS</p>
         </div>
     </div>
 
-    <div id="historial" class="sub-panel"><h3>HISTORIAL</h3></div>
-    <div id="llaves" class="sub-panel"><h3>LLAVES API</h3></div>
+    <div id="llaves" class="sub-panel">
+        <h3 style="font-size:0.7rem; color:var(--oro); margin:0 0 15px 0;">LLAVES API</h3>
+        <label>BINANCE KEY</label><input type="password" placeholder="••••••••••••">
+        <label>WHITEBIT KEY</label><input type="password" placeholder="••••••••••••">
+        <label>KUCOIN KEY</label><input type="password" placeholder="••••••••••••">
+    </div>
 
-    <div style="font-size:0.5rem; color:#444; text-align:center; margin-top:10px;">TRIANGULA-MAX v2.0 - Powered by José Gregorio</div>
+    <div id="admin" class="sub-panel">
+        <h3 style="font-size:0.7rem; color:var(--rojo); margin:0 0 15px 0;">GESTOR DE ACTIVOS</h3>
+        <div class="admin-section">
+            <label>PAR 1:</label>
+            <input type="text" id="name1" value="BTC / USDT" style="width:60%">
+            <input type="number" id="val1" value="65000" style="width:35%">
+        </div>
+        <div class="admin-section">
+            <label>PAR 2:</label>
+            <input type="text" id="name2" value="ETH / USDT" style="width:60%">
+            <input type="number" id="val2" value="3500" style="width:35%">
+        </div>
+        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR CAMBIOS</button>
+    </div>
+
 </div>
 
 <script>
-    // Base de datos local simulada
-    let configCriptos = [
-        { id: 'c1', nombre: "BTC / USDT", precio: 65000 },
-        { id: 'c2', nombre: "ETH / USDT", precio: 3500 },
-        { id: 'c3', nombre: "SOL / USDT", precio: 145 }
+    let config = [
+        { nombre: "BTC / USDT", precio: 65000 },
+        { nombre: "ETH / USDT", precio: 3500 }
     ];
 
     function showTab(id, btn) {
+        // Ocultar todos los paneles
         document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+        // Quitar estado activo de todos los botones
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        // Mostrar el seleccionado
         document.getElementById(id).classList.add('active');
         btn.classList.add('active');
     }
 
-    // FUNCIÓN DE ADMIN: Guarda cambios sin tocar código
-    function saveAdminChanges() {
-        configCriptos[0].nombre = document.getElementById('name1').value;
-        configCriptos[0].precio = parseFloat(document.getElementById('val1').value);
-        
-        configCriptos[1].nombre = document.getElementById('name2').value;
-        configCriptos[1].precio = parseFloat(document.getElementById('val2').value);
-        
-        configCriptos[2].nombre = document.getElementById('name3').value;
-        configCriptos[2].precio = parseFloat(document.getElementById('val3').value);
-        
-        renderSelectors();
-        alert("¡Configuración actualizada con éxito!");
-        showTab('arbitraje', document.querySelector('.tab-btn')); // Regresa a la vista usuario
+    function saveAdmin() {
+        config[0].nombre = document.getElementById('name1').value;
+        config[0].precio = parseFloat(document.getElementById('val1').value);
+        config[1].nombre = document.getElementById('name2').value;
+        config[1].precio = parseFloat(document.getElementById('val2').value);
+        render();
+        alert("¡Configuración guardada!");
     }
 
-    function renderSelectors() {
+    function render() {
         const sel = document.getElementById('pair-selector');
-        sel.innerHTML = "";
-        configCriptos.forEach((c, index) => {
-            let opt = document.createElement('option');
-            opt.value = index;
-            opt.innerText = c.nombre;
-            sel.appendChild(opt);
-        });
+        sel.innerHTML = config.map((c, i) => `<option value="${i}">${c.nombre}</option>`).join('');
     }
 
     function updatePrices() {
         const idx = document.getElementById('pair-selector').value;
-        const base = configCriptos[idx].precio;
-        
+        if(!config[idx]) return;
+        const base = config[idx].precio;
         let b = base + (Math.random() * (base * 0.002));
         document.getElementById('p1').innerText = "$" + b.toLocaleString();
-        document.getElementById('p2').innerText = "$" + (b + (base * 0.008)).toLocaleString();
+        document.getElementById('p2').innerText = "$" + (b + (base * 0.009)).toLocaleString();
         document.getElementById('p3').innerText = "$" + (b - (base * 0.001)).toLocaleString();
-        document.getElementById('p-spread').innerText = "+" + (0.85 + Math.random()*0.6).toFixed(2) + "%";
+        document.getElementById('p-spread').innerText = "+" + (0.90 + Math.random()*0.5).toFixed(2) + "%";
     }
 
-    // Inicialización
-    renderSelectors();
+    render();
     setInterval(updatePrices, 2000);
 </script>
-
 </body>
 </html>
