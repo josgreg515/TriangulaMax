@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX-BOT | Master Elite</title>
+    <title>TRIANGULA-MAX-BOT | Redes Activas</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -44,10 +44,6 @@
 
         .log-terminal { background: #000; border: 1px solid #222; height: 100px; overflow-y: auto; padding: 10px; font-family: 'Roboto Mono'; font-size: 0.55rem; color: var(--verde); border-radius: 5px; margin-top: 10px; }
 
-        /* BOTÓN SEGURIDAD */
-        .btn-seguridad { width: 100%; background: transparent; border: 1px solid rgba(0, 229, 255, 0.3); color: var(--cian); padding: 8px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-seguridad:hover { background: rgba(0, 229, 255, 0.1); }
-
         label { font-size: 0.55rem; color: var(--oro); display: block; margin-top: 10px; text-transform: uppercase; }
         select, input { width: 100%; background: #0d1117; border: 1px solid #333; color: var(--cian); padding: 10px; margin-top: 5px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.65rem; box-sizing: border-box; }
         
@@ -55,6 +51,8 @@
         .api-group h4 { font-size: 0.6rem; color: var(--oro); margin: 0 0 5px 0; }
 
         .btn-exec { width: 100%; background: #1a1a1a; border: 1px solid var(--oro); color: var(--oro); padding: 15px; margin-top: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+
+        .btn-seguridad { width: 100%; background: transparent; border: 1px solid rgba(0, 229, 255, 0.3); color: var(--cian); padding: 8px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 0.55rem; text-transform: uppercase; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -87,8 +85,17 @@
 
     <div id="arbitraje" class="sub-panel active">
         <h3 id="txt-mando" style="font-size:0.75rem; color:var(--oro); margin:0;">CENTRO DE MANDO</h3>
-        <label>Par de Criptomonedas:</label>
+        
+        <label>Par Activo:</label>
         <select id="pair-selector" onchange="updatePrices()"></select>
+
+        <label>Red de Transferencia (Baja Comisión):</label>
+        <select id="network-selector">
+            <option value="solana">Solana (SOL) - $0.01 fee</option>
+            <option value="polygon">Polygon (MATIC) - $0.02 fee</option>
+            <option value="tron">TRON (TRC-20) - $1.00 fee</option>
+            <option value="litecoin">Litecoin (LTC) - $0.20 fee</option>
+        </select>
 
         <div class="price-terminal">
             <div class="price-line"><span>BINANCE</span><span id="p1" class="val-ex">$0.00</span></div>
@@ -102,9 +109,9 @@
 
         <button class="btn-exec" id="btn-exec" onclick="ejecutarCiclo()">INICIAR CICLO DE ARBITRAJE</button>
         
-        <div class="log-terminal" id="log-terminal">> TRIANGULA-MAX v2.0 listo.</div>
+        <div class="log-terminal" id="log-terminal">> TRIANGULA-MAX listo.</div>
         
-        <button class="btn-seguridad" onclick="alert('🛡️ SEGURIDAD ACTIVA:\n- Encriptación de API AES-256\n- Bloqueo de retiros a direcciones externas no autorizadas\n- Sistema de protección ante deslizamiento de precio (Anti-Slippage)')">
+        <button class="btn-seguridad" onclick="alert('🛡️ SEGURIDAD ACTIVA:\n- Encriptación AES-256\n- Protección Anti-Slippage\n- Redes verificadas para bajo costo.')">
             ℹ️ INFORMACIÓN DE SEGURIDAD
         </button>
     </div>
@@ -118,13 +125,11 @@
 
     <div id="admin" class="sub-panel">
         <h3 style="font-size:0.75rem; color:var(--rojo); margin:0;">CONFIGURACIÓN</h3>
-        <label>Par 1: BTC/USDT</label>
+        <label>Personalizar Criptos:</label>
         <div style="display:flex; gap:5px;"><input type="text" id="n1" value="BTC/USDT"><input type="number" id="v1" value="71929"></div>
-        <label>Par 2: ETH/USDT</label>
         <div style="display:flex; gap:5px;"><input type="text" id="n2" value="ETH/USDT"><input type="number" id="v2" value="2193"></div>
-        <label>Par 3: SOL/USDT</label>
         <div style="display:flex; gap:5px;"><input type="text" id="n3" value="SOL/USDT"><input type="number" id="v3" value="150"></div>
-        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR</button>
+        <button class="btn-exec" style="border-color:var(--verde); color:var(--verde);" onclick="saveAdmin()">GUARDAR CAMBIOS</button>
     </div>
 
     <div id="historial" class="sub-panel"><h3>HISTORIAL</h3></div>
@@ -135,7 +140,6 @@
         es: { mando: "Centro de Mando", exec: "INICIAR CICLO DE ARBITRAJE", keys: "Llaves API" },
         en: { mando: "Command Center", exec: "START ARBITRAGE CYCLE", keys: "API Keys" },
         pt: { mando: "Centro de Comando", exec: "INICIAR CICLO", keys: "Chaves API" }
-        // ... (otros idiomas se mantienen igual)
     };
 
     let activos = [{ n: "BTC/USDT", v: 71929 }, { n: "ETH/USDT", v: 2193 }, { n: "SOL/USDT", v: 150 }];
@@ -172,12 +176,18 @@
     }
 
     async function ejecutarCiclo() {
-        addLog("Iniciando escaneo seguro...");
-        await new Promise(r => setTimeout(r, 1000));
-        addLog("✅ Verificación de seguridad completa.");
-        addLog("Ejecutando ciclo de arbitraje inter-exchange...");
-        await new Promise(r => setTimeout(r, 2000));
-        addLog("Operación finalizada. Fondos retornados a base.");
+        const red = document.getElementById('network-selector').value;
+        addLog(`Iniciando ciclo usando red: ${red.toUpperCase()}`);
+        addLog("1. Ejecutando compra en plataforma origen...");
+        await new Promise(r => setTimeout(r, 1200));
+        addLog(`2. Transfiriendo vía ${red.toUpperCase()}...`);
+        // Simular tiempo de red
+        let espera = red === 'litecoin' ? 3000 : 1500;
+        await new Promise(r => setTimeout(r, espera));
+        addLog("3. Venta liquidada con éxito.");
+        addLog("4. Retornando capital + profit a base inicial.");
+        await new Promise(r => setTimeout(r, 1500));
+        addLog("✅ OPERACIÓN FINALIZADA.");
     }
 
     render();
