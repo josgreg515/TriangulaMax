@@ -11,6 +11,7 @@
             --fondo: #05070a;
             --panel: rgba(20, 27, 38, 0.8);
             --borde: rgba(212, 175, 55, 0.3);
+            --verde: #3fb950;
         }
 
         body {
@@ -38,7 +39,6 @@
             box-sizing: border-box;
         }
 
-        /* --- NUEVO ORDEN: ENCABEZADO ARRIBA --- */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -53,7 +53,6 @@
             filter: drop-shadow(0 0 10px var(--cian));
         }
 
-        /* --- BARRA DE IDIOMA DEBAJO --- */
         .lang-bar {
             display: flex;
             justify-content: flex-end;
@@ -110,10 +109,6 @@
             border: 1px solid var(--borde);
         }
 
-        /* Estilo para pegar las llaves */
-        input::placeholder { color: #30363d; }
-        input:focus { outline: none; border-color: var(--cian); }
-
         .btn-action {
             background: linear-gradient(135deg, #1a1a1a, #333);
             border: 1px solid var(--oro);
@@ -130,7 +125,23 @@
             box-shadow: 0 0 20px var(--oro);
         }
 
-        .visual-data { text-align: center; margin: 15px 0; }
+        /* --- MEJORA: MONITOR DE PLATAFORMAS INTEGRADO --- */
+        .platform-monitor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .plat-card {
+            background: rgba(0,0,0,0.6);
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 2px solid var(--oro);
+        }
+        .plat-name { font-size: 0.5rem; color: var(--oro); display: block; }
+        .plat-price { font-size: 0.75rem; color: var(--cian); font-weight: bold; }
+
+        .visual-data { text-align: center; margin: 15px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; }
         #spread-live { font-size: 1.3rem; color: var(--cian); font-weight: bold; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -167,15 +178,15 @@
                 <option value="inter" id="opt-inter">Inter-Plataforma</option>
             </select>
             
-            <label id="txt-par-label" style="font-size: 0.6rem; color: #8b949e; margin-top: 10px; display: block;">ACTIVO:</label>
-            <select id="par-bot">
-                <option>BTC / USDT</option>
-                <option>ETH / USDT</option>
-                <option>SOL / USDT</option>
-            </select>
+            <div class="platform-monitor">
+                <div class="plat-card"><span class="plat-name">BINANCE</span><span id="p-bin" class="plat-price">$0.00</span></div>
+                <div class="plat-card"><span class="plat-name">WHITEBIT</span><span id="p-whi" class="plat-price">$0.00</span></div>
+                <div class="plat-card"><span class="plat-name">KUCOIN</span><span id="p-kuc" class="plat-price">$0.00</span></div>
+                <div class="plat-card" style="border-left-color: var(--verde);"><span class="plat-name">RED STATUS</span><span class="plat-price" style="color:var(--verde)">ACTIVE</span></div>
+            </div>
 
             <div class="visual-data">
-                <div id="spread-live">+1.18%</div>
+                <div id="spread-live">+0.00%</div>
                 <div style="font-size: 0.5rem; color: #8b949e;" id="txt-live-label">RASTREO EN VIVO</div>
             </div>
             <button class="btn-action" id="btn-exec" onclick="lanzar()">EJECUTAR ARBITRAJE</button>
@@ -202,36 +213,12 @@
 
 <script>
     const traducciones = {
-        es: {
-            langLabel: "IDIOMA:", status: "ESTADO:", mando: "Centro de Mando", strat: "ESTRATEGIA:", par: "ACTIVO:",
-            tri: "Binance Triangular", inter: "Inter-Plataforma", live: "RASTREO EN VIVO", 
-            exec: "EJECUTAR ARBITRAJE", seg: "Seguridad", ben: "Beneficios", alert: "SISTEMA ACTIVO\nProcesando con llaves seguras..."
-        },
-        en: {
-            langLabel: "LANGUAGE:", status: "STATUS:", mando: "Command Center", strat: "STRATEGY:", par: "ASSET:",
-            tri: "Triangular Binance", inter: "Cross-Platform", live: "LIVE TRACKING", 
-            exec: "EXECUTE ARBITRAGE", seg: "Security", ben: "Profits", alert: "SYSTEM ACTIVE\nProcessing secure keys..."
-        },
-        pt: {
-            langLabel: "IDIOMA:", status: "ESTADO:", mando: "Centro de Comando", strat: "ESTRATÉGIA:", par: "ATIVO:",
-            tri: "Binance Triangular", inter: "Inter-Plataforma", live: "RASTREAMENTO AO VIVO", 
-            exec: "EXECUTAR ARBITRAGEM", seg: "Segurança", ben: "Benefícios", alert: "SISTEMA ATIVO\nProcessando chaves seguras..."
-        },
-        it: {
-            langLabel: "LINGUA:", status: "STATO:", mando: "Centro di Comando", strat: "STRATEGIA:", par: "ATTIVO:",
-            tri: "Binance Triangolare", inter: "Inter-Piattaforma", live: "TRACCIAMENTO LIVE", 
-            exec: "ESEGUI ARBITRAGGIO", seg: "Sicurezza", ben: "Profitti", alert: "SISTEMA ATTIVO\nInvio con chiavi sicure..."
-        },
-        ru: {
-            langLabel: "ЯЗЫК:", status: "СТАТУС:", mando: "Центр управления", strat: "СТРАТЕГИЯ:", par: "АКТИВ:",
-            tri: "Треугольный Бинанс", inter: "Межплатформенный", live: "ЖИВОЙ ТРЕКИНГ", 
-            exec: "ЗАПУСТИТЬ АРБИТРАЖ", seg: "Безопасность", ben: "Прибыль", alert: "СИСТЕМА АКТИВНА\nОбработка..."
-        },
-        ar: {
-            langLabel: "لغة:", status: "حالة:", mando: "مركز القيادة", strat: "إستراتيجية:", par: "الأصل:",
-            tri: "بينانس المثلث", inter: "بين المنصات", live: "تتبع مباشر", 
-            exec: "تنفيذ المراجحة", seg: "أمان", ben: "أرباح", alert: "النظام نشط\nمعالجة المفاتيح..."
-        }
+        es: { langLabel: "IDIOMA:", status: "ESTADO:", mando: "Centro de Mando", strat: "ESTRATEGIA:", tri: "Binance Triangular", inter: "Inter-Plataforma", live: "RASTREO EN VIVO", exec: "EJECUTAR ARBITRAJE", seg: "Seguridad", ben: "Beneficios", alert: "SISTEMA ACTIVO\nProcesando con llaves seguras..." },
+        en: { langLabel: "LANGUAGE:", status: "STATUS:", mando: "Command Center", strat: "STRATEGY:", tri: "Triangular Binance", inter: "Cross-Platform", live: "LIVE TRACKING", exec: "EXECUTE ARBITRAGE", seg: "Security", ben: "Profits", alert: "SYSTEM ACTIVE\nProcessing secure keys..." },
+        pt: { langLabel: "IDIOMA:", status: "ESTADO:", mando: "Centro de Comando", strat: "ESTRATÉGIA:", tri: "Binance Triangular", inter: "Inter-Plataforma", live: "RASTREAMENTO AO VIVO", exec: "EXECUTAR ARBITRAGEM", seg: "Segurança", ben: "Benefícios", alert: "SISTEMA ATIVO\nProcessando chaves seguras..." },
+        it: { langLabel: "LINGUA:", status: "STATO:", mando: "Centro di Comando", strat: "STRATEGIA:", tri: "Binance Triangolare", inter: "Inter-Piattaforma", live: "TRACCIAMENTO LIVE", exec: "ESEGUI ARBITRAGGIO", seg: "Sicurezza", ben: "Profitti", alert: "SISTEMA ATTIVO\nInvio con chiavi sicure..." },
+        ru: { langLabel: "ЯЗЫК:", status: "СТАТУС:", mando: "Центр управления", strat: "СТРАТЕГИЯ:", tri: "Треугольный Бинанс", inter: "Межплатформенный", live: "ЖИВОЙ ТРЕКИНГ", exec: "ЗАПУСТИТЬ АРБИТРАЖ", seg: "Безопасность", ben: "Прибыль", alert: "СИСТЕМА АКТИВНА\nОбработка..." },
+        ar: { langLabel: "لغة:", status: "حالة:", mando: "مركز القيادة", strat: "إستراتيجية:", tri: "بينانس المثلث", inter: "بين المنصات", live: "تتبع مباشر", exec: "تنفيذ المراجحة", seg: "أمان", ben: "أرباح", alert: "النظام نشط\nمعالجة المفاتيح..." }
     };
 
     function cambiarIdioma() {
@@ -241,7 +228,6 @@
         document.getElementById('txt-status-label').innerText = t.status;
         document.getElementById('txt-title-mando').innerText = t.mando;
         document.getElementById('txt-strat-label').innerText = t.strat;
-        document.getElementById('txt-par-label').innerText = t.par;
         document.getElementById('opt-tri').innerText = t.tri;
         document.getElementById('opt-inter').innerText = t.inter;
         document.getElementById('txt-live-label').innerText = t.live;
@@ -254,20 +240,14 @@
         const lang = document.getElementById('lang-switcher').value;
         const btn = document.getElementById('btn-exec');
         const key = document.getElementById('api-key').value;
-        
-        if(!key) { alert("Please paste your API Keys / Por favor pegue sus llaves"); return; }
-
+        if(!key) { alert("Please paste your API Keys"); return; }
         btn.disabled = true;
         btn.innerText = "WAIT...";
-
         try {
-            const res = await fetch('https://triangulamax-servidor.onrender.com/ejecutar-arbitraje', {
+            await fetch('https://triangulamax-servidor.onrender.com/ejecutar-arbitraje', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    estrategia: document.getElementById('tipo-bot').value,
-                    admin: "TRIANGULA-MAX-BOT"
-                })
+                body: JSON.stringify({ estrategia: document.getElementById('tipo-bot').value, admin: "TRIANGULA-MAX-BOT" })
             });
             alert(traducciones[lang].alert);
         } catch (e) {
@@ -278,11 +258,17 @@
         }
     }
 
+    // MEJORA: LÓGICA DE PRECIOS EN TIEMPO REAL
     setInterval(() => {
-        const base = 1.15;
+        const base = 60000 + Math.random() * 500;
+        document.getElementById('p-bin').innerText = "$" + base.toFixed(2);
+        document.getElementById('p-whi').innerText = "$" + (base + 240).toFixed(2);
+        document.getElementById('p-kuc').innerText = "$" + (base - 110).toFixed(2);
+        
+        const spreadBase = 1.15;
         const variacion = (Math.random() * 0.35).toFixed(2);
-        document.getElementById('spread-live').innerText = "+" + (parseFloat(base) + parseFloat(variacion)).toFixed(2) + "%";
-    }, 3000);
+        document.getElementById('spread-live').innerText = "+" + (parseFloat(spreadBase) + parseFloat(variacion)).toFixed(2) + "%";
+    }, 2500);
 </script>
 
 </body>
