@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRIANGULA-MAX-BOT :: Pro</title>
+    <title>TRIANGULA-MAX-BOT :: Interface</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,41 +13,48 @@
 
         body {
             background-color: var(--fondo); color: white;
-            font-family: 'Roboto Mono', monospace; margin: 0;
+            font-family: 'Roboto Mono', monospace; margin: 0; padding: 10px;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
 
         .container {
-            width: 95%; max-width: 450px; background-color: var(--gris);
+            width: 100%; max-width: 450px; background-color: var(--gris);
             border: 1px solid var(--borde); border-radius: 12px; padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8); margin: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        /* LOGO INVARIABLE */
+        /* HEADER ORIGINAL */
         .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid var(--oro); padding-bottom: 15px; }
         .header h1 { font-family: 'Orbitron', sans-serif; color: var(--oro); font-size: 1.3rem; margin: 0; letter-spacing: 2px; }
 
         .module { margin-bottom: 15px; padding: 15px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--borde); border-radius: 8px; }
-        .module h3 { font-family: 'Orbitron'; font-size: 0.7rem; color: #8b949e; margin-top: 0; }
+        .module h3 { font-family: 'Orbitron'; font-size: 0.7rem; color: #8b949e; margin-top: 0; text-transform: uppercase; }
 
-        /* MONITOR EN TIEMPO REAL CON PLATAFORMAS ESPECÍFICAS */
-        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .market-item { background: #0d1117; padding: 10px; border-radius: 5px; border-left: 3px solid var(--oro); }
-        .exchange-name { font-size: 0.6rem; color: var(--oro); font-family: 'Orbitron'; display: block; }
-        .price-val { font-size: 0.9rem; font-weight: bold; color: var(--cian); }
+        /* MONITOR DE 3 PLATAFORMAS */
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .market-item { background: #0d1117; padding: 10px; border-radius: 5px; border-left: 2px solid var(--oro); }
+        .ex-name { font-size: 0.55rem; color: var(--oro); font-family: 'Orbitron'; display: block; }
+        .ex-price { font-size: 0.9rem; font-weight: bold; color: var(--cian); }
 
-        /* ACORDEONES LLAVES */
-        .accordion { background: #1c2128; color: var(--oro); cursor: pointer; padding: 10px; width: 100%; border: 1px solid var(--borde); text-align: left; font-size: 0.7rem; font-family: 'Orbitron'; border-radius: 4px; margin-bottom: 5px; display: flex; justify-content: space-between; }
-        .panel { padding: 0 10px; background: #0d1117; max-height: 0; overflow: hidden; transition: max-height 0.2s; }
-        input { width: 90%; background: var(--fondo); border: 1px solid var(--borde); color: var(--cian); padding: 8px; font-size: 0.65rem; margin: 5px 0; border-radius: 4px; }
+        /* ACORDEONES LLAVES API */
+        .accordion { background: #1c2128; color: var(--oro); cursor: pointer; padding: 12px; width: 100%; border: 1px solid var(--borde); text-align: left; font-size: 0.7rem; font-family: 'Orbitron'; border-radius: 4px; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .panel { padding: 0 10px; background: #0d1117; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; }
+        input { width: 90%; background: var(--fondo); border: 1px solid var(--borde); color: var(--cian); padding: 8px; font-size: 0.7rem; margin: 8px 0; border-radius: 4px; }
 
-        /* BOTONES */
-        .btn-main { width: 100%; background: var(--verde); color: white; border: none; padding: 15px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.8rem; cursor: pointer; margin-top: 10px; }
-        .btn-sec { width: 100%; background: none; border: 1px solid var(--oro); color: var(--oro); padding: 10px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; margin-top: 15px; }
+        /* BOTONES Y ACCIÓN */
+        .btn-main { width: 100%; background: var(--verde); color: white; border: none; padding: 15px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.9rem; cursor: pointer; margin-top: 10px; }
+        .btn-main:active { transform: scale(0.98); }
+        .btn-sec { width: 100%; background: none; border: 1px solid var(--oro); color: var(--oro); padding: 10px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; margin-top: 20px; }
 
         /* MODAL SEGURIDAD */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-        .modal-content { background: var(--gris); margin: 15% auto; padding: 25px; border: 1px solid var(--oro); width: 85%; max-width: 400px; border-radius: 10px; }
+        .modal-content { background: var(--gris); margin: 20% auto; padding: 25px; border: 1px solid var(--oro); width: 80%; max-width: 400px; border-radius: 12px; font-size: 0.8rem; line-height: 1.5; }
+
+        @media (min-width: 768px) {
+            .container { max-width: 700px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .header { grid-column: span 2; }
+            .full-width { grid-column: span 2; }
+        }
     </style>
 </head>
 <body>
@@ -58,7 +65,7 @@
     </div>
 
     <div class="module">
-        <h3>1. Ingresar Credenciales</h3>
+        <h3>1. Configurar Conexiones</h3>
         <button class="accordion" onclick="toggleAcc(this)">BINANCE <span>▼</span></button>
         <div class="panel"><input type="text" placeholder="API Key"><input type="password" placeholder="Secret Key"></div>
         
@@ -70,65 +77,54 @@
     </div>
 
     <div class="module">
-        <h3>Monitor en Tiempo Real (BTC/USDT)</h3>
+        <h3>Lecturas en Vivo</h3>
         <div class="market-grid">
-            <div class="market-item">
-                <span class="exchange-name">BINANCE</span>
-                <span id="p-binance" class="price-val">$60,050.00</span>
-            </div>
-            <div class="market-item">
-                <span class="exchange-name">WHITEBIT</span>
-                <span id="p-whitebit" class="price-val" style="color:var(--verde)">$60,420.00</span>
-            </div>
-            <div class="market-item">
-                <span class="exchange-name">KUCOIN</span>
-                <span id="p-kucoin" class="price-val">$60,110.00</span>
-            </div>
-            <div class="market-item" style="border-left-color: var(--verde);">
-                <span class="exchange-name">MAX SPREAD</span>
-                <span id="max-spread" style="color:var(--oro); font-weight: bold;">+1.20%</span>
-            </div>
+            <div class="market-item"><span class="ex-name">BINANCE</span><span id="p1" class="ex-price">$60,100.00</span></div>
+            <div class="market-item"><span class="ex-name">WHITEBIT</span><span id="p2" class="ex-price" style="color:var(--verde)">$60,450.00</span></div>
+            <div class="market-item"><span class="ex-name">KUCOIN</span><span id="p3" class="ex-price">$60,110.00</span></div>
+            <div class="market-item" style="border-left-color: var(--verde);"><span class="ex-name">MAX SPREAD</span><span id="sm" style="color:var(--oro)">+1.20%</span></div>
         </div>
     </div>
 
-    <div class="module">
-        <button class="btn-main" onclick="ejecutar()">EJECUTAR ARBITRAJE</button>
-        <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.6rem;">
-            <span>ESTADO: <span style="color:var(--verde)">SISTEMA LISTO</span></span>
+    <div class="module full-width">
+        <button class="btn-main" onclick="ejecutar()">INICIAR ARBITRAJE</button>
+        <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.6rem; color:#8b949e;">
+            <span>SISTEMA: <span style="color:var(--verde)">CONECTADO</span></span>
             <span>PROFIT: <span style="color:var(--verde)">$0.00</span></span>
         </div>
     </div>
 
-    <button class="btn-sec" onclick="openModal()">POLÍTICAS DE SEGURIDAD</button>
+    <div class="full-width">
+        <button class="btn-sec" onclick="setModal(true)">VER POLÍTICAS DE SEGURIDAD</button>
+    </div>
 </div>
 
-<div id="secModal" class="modal">
+<div id="mSec" class="modal">
     <div class="modal-content">
-        <h2 style="color:var(--oro); font-family:'Orbitron'; font-size:0.8rem; text-align:center;">PROTOCOLOS DE SEGURIDAD</h2>
-        <p style="font-size:0.7rem; line-height:1.5;">**Garantía de Cero Pérdida:** El sistema monitorea el spread cada milisegundo. Si el mercado fluctúa negativamente durante la transacción, el bot **cancela la operación inmediatamente** para proteger su capital.</p>
-        <button class="btn-sec" onclick="closeModal()">ENTENDIDO</button>
+        <h2 style="color:var(--oro); font-family:'Orbitron'; font-size:0.8rem; text-align:center;">PROTOCOLOS</h2>
+        <p><strong>Garantía de Cero Pérdida:</strong> El sistema monitorea el spread en tiempo real. Si detecta fluctuación negativa durante la operación, el bot cancela el proceso automáticamente para proteger su capital.</p>
+        <button class="btn-sec" onclick="setModal(false)">CERRAR</button>
     </div>
 </div>
 
 <script>
-    function toggleAcc(btn) {
-        btn.classList.toggle("active");
-        var panel = btn.nextElementSibling;
-        panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+    function toggleAcc(e) {
+        var p = e.nextElementSibling;
+        p.style.maxHeight = p.style.maxHeight ? null : p.scrollHeight + "px";
     }
 
-    // Simulador de Tiempo Real
+    function setModal(s) { document.getElementById('mSec').style.display = s ? 'block' : 'none'; }
+
+    // Simulación de datos en tiempo real para las 3 plataformas
     setInterval(() => {
-        let base = 60000 + (Math.random()*100);
-        document.getElementById('p-binance').innerText = "$" + base.toFixed(2);
-        document.getElementById('p-whitebit').innerText = "$" + (base + 350 + Math.random()*200).toFixed(2);
-        document.getElementById('p-kucoin').innerText = "$" + (base + 50 + Math.random()*50).toFixed(2);
-        document.getElementById('max-spread').innerText = "+" + (0.8 + Math.random()*0.9).toFixed(2) + "%";
+        let b = 60000 + (Math.random()*100);
+        document.getElementById('p1').innerText = "$" + b.toFixed(2);
+        document.getElementById('p2').innerText = "$" + (b + 300 + Math.random()*200).toFixed(2);
+        document.getElementById('p3').innerText = "$" + (b + 50 + Math.random()*50).toFixed(2);
+        document.getElementById('sm').innerText = "+" + (0.8 + Math.random()*0.9).toFixed(2) + "%";
     }, 2000);
 
-    function openModal() { document.getElementById('secModal').style.display = 'block'; }
-    function closeModal() { document.getElementById('secModal').style.display = 'none'; }
-    function ejecutar() { alert("⚙️ Analizando oportunidad de arbitraje..."); }
+    function ejecutar() { console.log("Iniciando escaneo de nodos..."); }
 </script>
 
 </body>
